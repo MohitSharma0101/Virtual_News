@@ -1,4 +1,4 @@
-package com.mohitsharma.virtualnews.response
+package com.mohitsharma.virtualnews.model
 
 data class Source(
     val id: String,

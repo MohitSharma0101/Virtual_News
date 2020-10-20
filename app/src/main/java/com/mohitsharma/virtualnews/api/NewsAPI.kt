@@ -1,6 +1,6 @@
 package com.mohitsharma.virtualnews.api
 
-import com.mohitsharma.virtualnews.response.NewsResponse
+import com.mohitsharma.virtualnews.model.NewsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
