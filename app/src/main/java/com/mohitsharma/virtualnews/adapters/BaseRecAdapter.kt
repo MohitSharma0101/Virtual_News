@@ -9,27 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mohitsharma.virtualnews.model.Article
 
 
-abstract class BaseRecAdapter<T:Any>() : RecyclerView.Adapter<BaseRecAdapter.ViewHolder>() {
+abstract class BaseRecAdapter() : RecyclerView.Adapter<BaseRecAdapter.ViewHolder>() {
      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
          LayoutInflater.from(parent.context)
              .inflate(inflateView(),parent,false)
      )
 
-    private val differCallback = object : DiffUtil.ItemCallback<Article>() {
-        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem.url == newItem.url
-        }
-
-        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem == newItem
-        }
-    }
-
     protected  val differ = AsyncListDiffer(returnInstance(), differCallback)
 
 
     class ViewHolder(view: View):RecyclerView.ViewHolder(view)
+    abstract val differCallback: DiffUtil.ItemCallback<Article>
     abstract fun inflateView():Int
-    abstract  fun returnInstance():BaseRecAdapter<T>
+    abstract  fun returnInstance():BaseRecAdapter
     override fun getItemCount(): Int = differ.currentList.size
  }
