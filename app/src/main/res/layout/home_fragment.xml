@@ -3,16 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".ui.fragments.HomeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text=" home"
-        android:textSize="50sp"
-        android:background="@color/grey_blue" 
-        android:textColor="@color/black"
-        android:gravity="center"/>
-
+<androidx.viewpager2.widget.ViewPager2
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/view_pager"/>
 </FrameLayout>

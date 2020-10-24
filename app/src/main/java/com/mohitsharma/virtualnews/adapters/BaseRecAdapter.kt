@@ -15,7 +15,7 @@ abstract class BaseRecAdapter() : RecyclerView.Adapter<BaseRecAdapter.ViewHolder
              .inflate(inflateView(),parent,false)
      )
 
-    protected  val differ = AsyncListDiffer(returnInstance(), differCallback)
+      val differ = AsyncListDiffer(returnInstance(), differCallback)
 
 
     class ViewHolder(view: View):RecyclerView.ViewHolder(view)

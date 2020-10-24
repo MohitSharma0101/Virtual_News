@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="grey">#EE4E4D4D</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey_blue">#DFECEFF1</color>
+    <color name="grey_blue">#F2E7FE</color>
     <color name="white2">#E7E9EA</color>
     <color name="reply_blue_700">#344955</color>
     <color name="reply_blue_800">#232F34</color>
@@ -17,5 +17,6 @@
     <color name="reply_orange_500">#F9AA33</color>
     <color name="light_red">#ffd8d9</color>
     <color name="red">#db0f0e</color>
+
 
 </resources>
