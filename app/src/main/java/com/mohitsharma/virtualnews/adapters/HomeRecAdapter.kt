@@ -19,6 +19,8 @@ class HomeRecAdapter: BaseRecAdapter() {
             Glide.with(this)
                     .load(article.urlToImage)
                     .centerCrop()
+                .placeholder(android.R.drawable.progress_indeterminate_horizontal)
+                .error(android.R.drawable.stat_notify_error)
                     .into(iv_content_image)
         }
     }

@@ -1,127 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
  >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:layout_anchor="@id/iv_content_image"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="Bookmark"
+        android:src="@drawable/ic_baseline_bookmark_border_24"
+        android:focusable="true" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_blue">
-
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:contentDescription="Article Image"
-            android:src="@drawable/avatar_icon"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
-            android:text="Mohit sharma"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            app:layout_constraintStart_toEndOf="@+id/iv_avatar"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:background="@color/white2">
 
         <ImageView
             android:id="@+id/iv_content_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="Article Image"
+            android:layout_height="250dp"
+            android:contentDescription="@string/article_image_description"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="5dp"
-            android:layout_marginTop="8dp"
-            android:text="25 oct 2020"
-            android:textColor="@color/grey"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline2"
-            app:layout_constraintEnd_toEndOf="@+id/tv_author"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tv_author"
-            app:layout_constraintTop_toBottomOf="@+id/tv_author"
-            app:layout_constraintVertical_bias="0.0" />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:layout_marginTop="35dp"
+        android:background="@color/white2">
 
         <TextView
             android:id="@+id/tv_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
             android:text="Black clover  is finally out"
             android:textColor="@color/black"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/iv_content_image" />
+            android:textSize="20sp"
+            android:paddingBottom="8dp"
+           />
 
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="after a long wait of 1 year \nfinally black clover ."
+            android:paddingBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="after a long wait of 1 year finally black clover dcdfdf ."
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_read_full_article"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/tv_headline"
-            app:layout_constraintVertical_bias="0.025" />
+           />
 
         <TextView
-            android:id="@+id/tv_read_full_article"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="20dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="88dp"
-            android:text="read full article.."
-            android:textColor="@color/purple_500"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:text="@string/swipe_left_to_view_full_article"
+            android:textSize="18sp"
+            android:paddingBottom="8dp"
+            />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
+        <TextView
+            android:id="@+id/tv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
+            android:fontFamily="sans-serif-light"
+            android:maxEms="20"
+            android:maxLines="1"
+            android:text="Mohit sharma"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:typeface="serif" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
+
+        <TextView
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+            android:text="25 oct 2020"
+            android:paddingBottom="16dp"
+            android:textColor="@color/grey"
+            android:textSize="15sp"
+           />
+    </LinearLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 
