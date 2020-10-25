@@ -1,6 +1,6 @@
 package com.mohitsharma.virtualnews.api
 
-import com.mohitsharma.virtualnews.Constants.BASE_URL
+import com.mohitsharma.virtualnews.util.Constants.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
