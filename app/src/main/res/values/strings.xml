@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Virtual News</string>
+    <string name="article_image_description">Article Image</string>
+    <string name="swipe_left_to_view_full_article">swipe left to view full article!</string>
 </resources>
