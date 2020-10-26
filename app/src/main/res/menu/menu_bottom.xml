@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/savedFragment"
-        android:title="Saved"
+        android:title="@string/menu_item_saved"
         android:icon="@drawable/ic_baseline_bookmarks_24"/>
     <item
         android:id="@+id/homeFragment"
-        android:title="Home"
+        android:title="@string/menu_item_home"
         android:checked="true"
         android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
         android:id="@+id/searchFragment"
-        android:title="Search"
+        android:title="@string/menu_item_search"
         android:icon="@drawable/ic_baseline_search_24"/>
 
 </menu>

@@ -14,6 +14,7 @@ class NewsViewModel(private val newsRepository: NewsRepository):ViewModel() {
 
     val breakingNews: MutableLiveData<Resources<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
+   var  currentNewsPosition = 0
 
     init {
         getBreakingNews("us")
@@ -36,12 +37,18 @@ class NewsViewModel(private val newsRepository: NewsRepository):ViewModel() {
 
     private fun NewsResponse.filterResponse() : NewsResponse  {
 
+        val list = mutableListOf<Article>()
         for(article in this.articles){
-            if(article.description != "" ){
-                article.publishedAt = formatDate(article.publishedAt)
-                article.author = formatAuthor(article.author)
+            if(article.description != "" && article.description !=null ){
+                article.apply {
+                    publishedAt = formatDate(publishedAt)
+                    author = formatAuthor(author)
+                }
+            }else{
+                list.add(article)
             }
         }
+        this.articles = this.articles.minus(list)
         return this
     }
 
