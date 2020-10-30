@@ -1,5 +1,6 @@
 package com.mohitsharma.virtualnews.database
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mohitsharma.virtualnews.model.Article
@@ -11,6 +12,9 @@ interface ArticleDao {
 
     @Query("SELECT * FROM articles")
     fun getAllArticles():LiveData<List<Article>>
+
+    @Query("SELECT * FROM articles WHERE title= :q")
+    suspend fun getArticleByTitle( q: String):Article
 
     @Delete
     suspend fun deleteArticle(article: Article)

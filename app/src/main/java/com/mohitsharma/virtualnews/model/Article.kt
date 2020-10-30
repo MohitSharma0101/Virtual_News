@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 data class Article(
         @PrimaryKey(autoGenerate = true)
         var id : Int? = null,
+        var isSaved: Boolean? = false,
         var author: String,
         val content: String,
         val description: String,
