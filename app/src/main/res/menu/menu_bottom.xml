@@ -10,7 +10,7 @@
         android:id="@+id/homeFragment"
         android:title="@string/menu_item_home"
         android:checked="true"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:icon="@drawable/ic_home"/>
 
     <item
         android:id="@+id/searchFragment"

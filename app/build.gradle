@@ -10,7 +10,6 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-
     defaultConfig {
         applicationId "com.mohitsharma.virtualnews"
         minSdkVersion 21
@@ -89,4 +88,10 @@ dependencies {
 
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    //floating search view
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+
+    //shimmer effect
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }

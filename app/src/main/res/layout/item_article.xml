@@ -7,23 +7,23 @@
  >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/fab_saved"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        app:layout_anchor="@id/iv_content_image"
-        app:layout_anchorGravity="bottom|end"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="Bookmark"
-        android:src="@drawable/ic_baseline_bookmark_border_24"
-        android:focusable="true" />
+        android:backgroundTint="?attr/fab_background"
+        android:clickable="true"
+        android:contentDescription="@string/bookmark"
+        android:focusable="true"
+        android:src="@drawable/ic_icon_action_bookmark_border_24px"
+        app:layout_anchor="@id/iv_content_image"
+        app:layout_anchorGravity="bottom|end" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white2">
+        android:background="?attr/AppBackground">
 
         <ImageView
             android:id="@+id/iv_content_image"
@@ -35,70 +35,67 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:layout_marginTop="35dp"
-        android:background="@color/white2">
-
-        <TextView
-            android:id="@+id/tv_headline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:text="Black clover  is finally out"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:paddingBottom="8dp"
-           />
-
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="35dp"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:paddingBottom="16dp"
-            android:fontFamily="sans-serif-light"
-            android:text="after a long wait of 1 year finally black clover dcdfdf ."
-            android:textColor="@color/black"
-            android:textSize="18sp"
-           />
+            android:background="?attr/AppBackground">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/swipe_left_to_view_full_article"
-            android:textSize="18sp"
-            android:paddingBottom="8dp"
-            />
+            <TextView
+                android:id="@+id/tv_headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="8dp"
+                android:text="Black clover  is finally out"
+                android:textColor="?attr/Heading_color"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:maxEms="20"
-            android:maxLines="1"
-            android:text="Mohit sharma"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:typeface="serif" />
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:paddingBottom="16dp"
+                android:text="after a long wait of 1 year finally black clover dcdfdf ."
+                android:textColor="?attr/subHeading_color"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_swipe_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:text="@string/swipe_left_to_view_full_article"
+                android:textColor="?attr/subHeading_color"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:maxEms="20"
+                android:maxLines="1"
+                android:text="Mohit sharma"
+                android:textColor="#989EA3"
+                android:textSize="20sp"
+                android:typeface="serif" />
 
 
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="25 oct 2020"
-            android:paddingBottom="16dp"
-            android:textColor="@color/grey"
-            android:textSize="15sp"
-           />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:text="25 oct 2020"
+                android:textColor="?attr/subHeading_color"
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

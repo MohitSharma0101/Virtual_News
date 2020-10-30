@@ -6,12 +6,21 @@
         <item name="colorPrimaryVariant">@color/reply_blue_800</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/dark_grey</item>
+        <item name="colorSecondaryVariant">@color/dark_grey</item>
+        <item name="colorOnSecondary">@color/light_blue</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-
         <!-- Customize your theme here. -->
+        <item name="AppBackground">@color/dark_grey</item>
+        <item name="BottomBarBackgroundColor">@color/light_grey</item>
+        <item name="Bookmark_color">@color/light_blue</item>
+        <item name="fab_background">@color/light_grey</item>
+        <item name="subHeading_color">@color/text_color</item>
+        <item name="Heading_color">@color/grey_bold</item>
+        <item name="BottomBarIconTintActive">@color/light_blue</item>
+        <item name="BottomBarIndicatorColor">@color/dark_blue</item>
+        <item name="BottomBarTextColor">@color/light_blue</item>
+        <item name="IconTint">#AAACAF</item>
     </style>
 </resources>

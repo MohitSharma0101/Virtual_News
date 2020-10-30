@@ -15,12 +15,12 @@ abstract class BaseRecAdapter() : RecyclerView.Adapter<BaseRecAdapter.ViewHolder
              .inflate(inflateView(),parent,false)
      )
 
-      val differ = AsyncListDiffer(returnInstance(), differCallback)
+
 
 
     class ViewHolder(view: View):RecyclerView.ViewHolder(view)
     abstract val differCallback: DiffUtil.ItemCallback<Article>
     abstract fun inflateView():Int
     abstract  fun returnInstance():BaseRecAdapter
-    override fun getItemCount(): Int = differ.currentList.size
+   // override fun getItemCount(): Int = differ.currentList.size
  }

@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Virtual News</string>
     <string name="article_image_description">Article Image</string>
-    <string name="swipe_left_to_view_full_article">>> swipe left to view full article >></string>
+    <string name="swipe_left_to_view_full_article">swipe left for full article >></string>
     <string name="menu_item_saved">Saved</string>
     <string name="menu_item_home">Home</string>
     <string name="menu_item_search">Search</string>
+    <string name="search_hint">Search..</string>
+    <string name="bookmark">Bookmark</string>
 </resources>
