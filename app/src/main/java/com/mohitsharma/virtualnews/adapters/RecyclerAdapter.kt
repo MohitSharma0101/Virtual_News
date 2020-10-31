@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.saved_article.view.*
 
 class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view)
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     private val savedDifferCallback: DiffUtil.ItemCallback<Article> = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean = oldItem.title == newItem.title
@@ -41,7 +41,6 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
                     .into(iv_content_image)
         }
     }
-
 
 
     override fun getItemCount(): Int = savedDiffer.currentList.size

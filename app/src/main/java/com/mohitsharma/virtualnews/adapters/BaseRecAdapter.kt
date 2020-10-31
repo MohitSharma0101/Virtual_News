@@ -10,17 +10,16 @@ import com.mohitsharma.virtualnews.model.Article
 
 
 abstract class BaseRecAdapter() : RecyclerView.Adapter<BaseRecAdapter.ViewHolder>() {
-     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-         LayoutInflater.from(parent.context)
-             .inflate(inflateView(),parent,false)
-     )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
+            LayoutInflater.from(parent.context)
+                    .inflate(inflateView(), parent, false)
+    )
 
 
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-
-    class ViewHolder(view: View):RecyclerView.ViewHolder(view)
     abstract val differCallback: DiffUtil.ItemCallback<Article>
-    abstract fun inflateView():Int
-    abstract  fun returnInstance():BaseRecAdapter
-   // override fun getItemCount(): Int = differ.currentList.size
- }
+    abstract fun inflateView(): Int
+    abstract fun returnInstance(): BaseRecAdapter
+    // override fun getItemCount(): Int = differ.currentList.size
+}

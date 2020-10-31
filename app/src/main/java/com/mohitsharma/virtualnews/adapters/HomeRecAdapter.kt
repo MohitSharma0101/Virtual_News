@@ -20,21 +20,20 @@ import kotlinx.coroutines.launch
 import pl.droidsonroids.gif.GifDrawable
 
 
-class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel):RecyclerView.Adapter<HomeRecAdapter.ViewHolder>() {
+class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel) : RecyclerView.Adapter<HomeRecAdapter.ViewHolder>() {
 
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view)
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article = differ.currentList[position]
-
         holder.itemView.apply {
             tv_author.text = article.author
             tv_date.text = article.publishedAt
             tv_headline.text = article.title
             tv_content.text = article.description
             viewModel.viewModelScope.launch(Dispatchers.Main) {
-                if(viewModel.isArticleSaved(article)){
+                if (viewModel.isArticleSaved(article)) {
                     fab_saved.setImageResource(R.drawable.ic_baseline_done_24)
                 }
             }
@@ -43,19 +42,19 @@ class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel):Recycle
                     .load(article.urlToImage)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .centerCrop()
-             //   .placeholder(gifFromResource)
-                .error(android.R.drawable.stat_notify_error)
+                    //   .placeholder(gifFromResource)
+                    .error(android.R.drawable.stat_notify_error)
                     .into(iv_content_image)
-           fab_saved.setOnClickListener {
-               viewModel.saveArticle(article)
-               Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-               notifyDataSetChanged()
 
+            fab_saved.setOnClickListener {
+                viewModel.saveArticle(article)
+                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                notifyDataSetChanged()
             }
         }
     }
 
-     private val differCallback: DiffUtil.ItemCallback<Article> = object : DiffUtil.ItemCallback<Article>() {
+    private val differCallback: DiffUtil.ItemCallback<Article> = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean = oldItem.title == newItem.title
 
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean = oldItem.description == newItem.description

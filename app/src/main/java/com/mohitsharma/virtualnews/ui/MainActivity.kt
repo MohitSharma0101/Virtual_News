@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide();
@@ -27,9 +27,10 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_bottom,menu)
-        bottomBar.setupWithNavController(menu!!,findNavController(R.id.nav_host_fragment))
+        menuInflater.inflate(R.menu.menu_bottom, menu)
+        bottomBar.setupWithNavController(menu!!, findNavController(R.id.nav_host_fragment))
         return true
     }
 }

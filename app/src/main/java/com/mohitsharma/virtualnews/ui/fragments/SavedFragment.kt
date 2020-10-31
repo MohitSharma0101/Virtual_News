@@ -23,5 +23,4 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
     }
 
 
-
 }

@@ -28,7 +28,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
     }
 
 
-    private fun observeBreakingNews(){
+    private fun observeBreakingNews() {
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resources.Loading -> {
@@ -42,21 +42,16 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                 }
                 else -> {
                     loading_view.visibility = View.VISIBLE
-                    Log.d("Response", "Error")
                 }
             }
         })
     }
 
-    private fun setUpVIewPager(){
+    private fun setUpVIewPager() {
         view_pager.adapter = adapter
         view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
         view_pager.currentItem = viewModel.currentNewsPosition
     }
-
-
-
-
 
 
 }
