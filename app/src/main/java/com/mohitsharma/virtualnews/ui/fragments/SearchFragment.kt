@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arlib.floatingsearchview.FloatingSearchView.OnQueryChangeListener
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.HomeRecAdapter
+import com.mohitsharma.virtualnews.adapters.RecyclerAdapter
 import com.mohitsharma.virtualnews.util.Resources
 import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.coroutines.Job
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
-    lateinit var searchAdapter:HomeRecAdapter
+    lateinit var searchAdapter:RecyclerAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeSearchNews()
@@ -34,7 +35,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
         })
 
-      searchAdapter = HomeRecAdapter(requireContext(),viewModel)
+      searchAdapter = RecyclerAdapter()
         search_rec_view.adapter = searchAdapter
         search_rec_view.layoutManager = LinearLayoutManager(requireContext())
 
@@ -49,7 +50,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
             when (it) {
                 is Resources.Success -> {
                     it.data?.let { newsResponse ->
-                        searchAdapter.differ.submitList(newsResponse.articles)
+                        searchAdapter.savedDiffer.submitList(newsResponse.articles)
                     }
                 }
                 else -> {

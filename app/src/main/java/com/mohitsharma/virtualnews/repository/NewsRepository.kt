@@ -15,4 +15,6 @@ class NewsRepository ( val db:ArticleDatabase){
     suspend fun saveArticle(article:Article) = db.getArticleDao().save(article)
 
     suspend fun isArticleSaved(article: Article) = db.getArticleDao().getArticleByTitle(article.title)
+
+    fun getSavedNews() = db.getArticleDao().getAllArticles()
 }

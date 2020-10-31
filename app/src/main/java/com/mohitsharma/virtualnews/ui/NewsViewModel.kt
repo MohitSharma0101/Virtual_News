@@ -10,7 +10,10 @@ import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
 import com.mohitsharma.virtualnews.repository.NewsRepository
 import com.mohitsharma.virtualnews.util.Resources
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 
 class NewsViewModel(private val newsRepository: NewsRepository):ViewModel() {
@@ -30,20 +33,18 @@ class NewsViewModel(private val newsRepository: NewsRepository):ViewModel() {
     fun saveArticle(article:Article) = viewModelScope.launch {
         newsRepository.saveArticle(article)
     }
-    fun isArticleSaved(article: Article) :Boolean {
+    suspend fun isArticleSaved(article: Article) :Boolean {
         var a:Article? = null
-        viewModelScope.launch {
-             a = newsRepository.isArticleSaved(article)
-            Log.d("IsArticleSaved", a.toString())
-        }
-        if(a != null){
-            return true
-        }else{
-            return false
+            Log.d("IsArticleSaved", "job started")
+            val job = viewModelScope.launch(Dispatchers.IO) {
+                a = newsRepository.isArticleSaved(article)
+                Log.d("IsArticleSaved",a.toString())
+            }
+        job.join()
+        Log.d("IsArticleSaved","job finish")
+        return a!=null
         }
 
-
-    }
         private fun getBreakingNews(countryCode: String) = viewModelScope.launch {
             breakingNews.postValue(Resources.Loading())
             val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
@@ -74,6 +75,9 @@ class NewsViewModel(private val newsRepository: NewsRepository):ViewModel() {
             }
             return Resources.Error(response.message())
         }
+
+    fun getSavedNews() = newsRepository.getSavedNews()
+
 
         private fun NewsResponse.filterResponse() : NewsResponse  {
 
@@ -107,4 +111,6 @@ class NewsViewModel(private val newsRepository: NewsRepository):ViewModel() {
             val date = d.substring(8,10)
             return "published at: $date-$month-$year"
         }
+
+
     }

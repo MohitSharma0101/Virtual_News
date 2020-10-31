@@ -31,12 +31,17 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
     private fun observeBreakingNews(){
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
+                is Resources.Loading -> {
+                    loading_view.visibility = View.VISIBLE
+                }
                 is Resources.Success -> {
+                    loading_view.visibility = View.GONE
                     it.data?.let { newsResponse ->
                         adapter.differ.submitList(newsResponse.articles)
                     }
                 }
                 else -> {
+                    loading_view.visibility = View.VISIBLE
                     Log.d("Response", "Error")
                 }
             }
