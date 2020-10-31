@@ -11,4 +11,13 @@
     android:layout_height="match_parent"
     android:id="@+id/view_pager"/>
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/news_loading"
+        android:background="@color/white"
+        android:visibility="gone"
+        />
+
 </FrameLayout>

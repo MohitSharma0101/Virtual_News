@@ -15,7 +15,7 @@
         android:clickable="true"
         android:contentDescription="@string/bookmark"
         android:focusable="true"
-        android:src="@drawable/ic_icon_action_bookmark_border_24px"
+        android:src="@drawable/ic_baseline_arrow_downward_24"
         app:layout_anchor="@id/iv_content_image"
         app:layout_anchorGravity="bottom|end" />
 
@@ -25,7 +25,7 @@
         android:orientation="vertical"
         android:background="?attr/AppBackground">
 
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             android:id="@+id/iv_content_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
