@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.signature.ObjectKey
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.ui.NewsViewModel
@@ -25,6 +26,12 @@ class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel) : Recyc
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
+            LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_article, parent, false)
+    )
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article = differ.currentList[position]
@@ -42,6 +49,7 @@ class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel) : Recyc
             Glide.with(this)
                     .load(article.urlToImage)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .signature(ObjectKey(article.urlToImage))
                     .centerCrop()
                     //   .placeholder(gifFromResource)
                     .error(android.R.drawable.stat_notify_error)
@@ -62,10 +70,7 @@ class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel) : Recyc
 
     }
     val differ = AsyncListDiffer(this, differCallback)
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-            LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_article, parent, false)
-    )
+
 
 
     override fun getItemCount(): Int = differ.currentList.size

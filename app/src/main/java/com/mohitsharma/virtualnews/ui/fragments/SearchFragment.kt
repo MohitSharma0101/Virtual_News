@@ -11,6 +11,7 @@ import com.mohitsharma.virtualnews.adapters.HomeRecAdapter
 import com.mohitsharma.virtualnews.adapters.RecyclerAdapter
 import com.mohitsharma.virtualnews.util.Constants.SEARCH_DELAY_TIME
 import com.mohitsharma.virtualnews.util.Resources
+import com.mohitsharma.virtualnews.util.setUpWithAdapter
 import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -40,8 +41,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         })
 
         searchAdapter = RecyclerAdapter()
-        search_rec_view.adapter = searchAdapter
-        search_rec_view.layoutManager = LinearLayoutManager(requireContext())
+        search_rec_view.setUpWithAdapter(requireContext(),searchAdapter)
 
     }
 

@@ -1,13 +1,30 @@
 package com.mohitsharma.virtualnews.util
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.view.ViewParent
+import android.widget.Adapter
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mohitsharma.virtualnews.R
+import com.mohitsharma.virtualnews.adapters.RecyclerAdapter
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
+
 
 fun Context.toast(msg:String){
    Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
 }
+
+fun RecyclerView.setUpWithAdapter(context: Context,adapter: RecyclerAdapter){
+    this.adapter = adapter
+    this.layoutManager = LinearLayoutManager(context)
+}
+
+
 
  fun NewsResponse.filterResponse(): NewsResponse {
    val list = mutableListOf<Article>()

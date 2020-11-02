@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.model.Article
 import kotlinx.android.synthetic.main.saved_article.view.*
@@ -38,6 +39,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
             Glide.with(this)
                     .load(article.urlToImage)
                     .centerCrop()
+                    .signature(ObjectKey(article.urlToImage))
                     .into(iv_content_image)
         }
     }
