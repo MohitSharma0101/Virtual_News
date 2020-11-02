@@ -10,7 +10,7 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(article: Article):Long
 
-    @Query("SELECT * FROM articles")
+    @Query("SELECT * FROM articles ORDER BY id DESC")
     fun getAllArticles():LiveData<List<Article>>
 
     @Query("SELECT * FROM articles WHERE title= :q")
