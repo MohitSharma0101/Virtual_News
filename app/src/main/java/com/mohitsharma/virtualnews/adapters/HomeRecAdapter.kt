@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.ui.NewsViewModel
+import com.mohitsharma.virtualnews.util.toast
 import kotlinx.android.synthetic.main.item_article.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,7 +49,7 @@ class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel) : Recyc
 
             fab_saved.setOnClickListener {
                 viewModel.saveArticle(article)
-                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                context.toast("Saved")
                 notifyDataSetChanged()
             }
         }

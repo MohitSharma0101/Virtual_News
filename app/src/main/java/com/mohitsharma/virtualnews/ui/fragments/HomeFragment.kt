@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.HomeRecAdapter
+import com.mohitsharma.virtualnews.util.DepthPageTransformer
 import com.mohitsharma.virtualnews.util.Resources
 import kotlinx.android.synthetic.main.home_fragment.*
 
@@ -51,6 +52,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         view_pager.adapter = adapter
         view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
         view_pager.currentItem = viewModel.currentNewsPosition
+        view_pager.setPageTransformer(DepthPageTransformer())
     }
 
 

@@ -13,6 +13,7 @@ class NewsRepository (private val db:ArticleDatabase){
             RetrofitInstance.api.searchNews(searchQuery,pageNumber)
 
     suspend fun saveArticle(article:Article) = db.getArticleDao().save(article)
+    suspend fun deleteAricle(article:Article) = db.getArticleDao().deleteArticle(article)
 
     suspend fun isArticleSaved(article: Article) = db.getArticleDao().getArticleByTitle(article.title)
 

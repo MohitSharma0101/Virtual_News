@@ -1,7 +1,5 @@
 package com.mohitsharma.virtualnews.ui
 
-
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +8,9 @@ import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
 import com.mohitsharma.virtualnews.repository.NewsRepository
 import com.mohitsharma.virtualnews.util.Resources
+import com.mohitsharma.virtualnews.util.filterResponse
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
@@ -24,14 +21,21 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     val searchNews: MutableLiveData<Resources<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
 
+
+  lateinit var  savedNewsLiveData: LiveData<List<Article>>
     var currentNewsPosition = 0
 
     init {
         getBreakingNews("in")
+       savedNewsLiveData = getSavedNews()
     }
+
 
     fun saveArticle(article: Article) = viewModelScope.launch {
         newsRepository.saveArticle(article)
+    }
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+       newsRepository.deleteAricle(article)
     }
 
     suspend fun isArticleSaved(article: Article): Boolean {
@@ -74,40 +78,8 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         return Resources.Error(response.message())
     }
 
-    fun getSavedNews() = newsRepository.getSavedNews()
+    private fun getSavedNews() = newsRepository.getSavedNews()
 
 
-    private fun NewsResponse.filterResponse(): NewsResponse {
-
-        val list = mutableListOf<Article>()
-        for (article in this.articles) {
-            if (article.description != "" && article.description != null) {
-                article.apply {
-                    publishedAt = formatDate(publishedAt)
-                    author = formatAuthor(author)
-                }
-            } else {
-                list.add(article)
-            }
-        }
-        this.articles = this.articles.minus(list)
-        return this
     }
 
-    private fun formatAuthor(a: String): String {
-        return if (a == "" || a == null) {
-            "Source: Unknown"
-        } else {
-            "Source: $a"
-        }
-    }
-
-    private fun formatDate(d: String): String {
-        val year = d.substring(0, 4)
-        val month = d.substring(5, 7)
-        val date = d.substring(8, 10)
-        return "published at: $date-$month-$year"
-    }
-
-
-}
