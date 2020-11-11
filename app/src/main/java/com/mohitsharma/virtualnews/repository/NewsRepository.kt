@@ -18,4 +18,7 @@ class NewsRepository (private val db:ArticleDatabase){
     suspend fun isArticleSaved(article: Article) = db.getArticleDao().getArticleByTitle(article.title)
 
     fun getSavedNews() = db.getArticleDao().getAllArticles()
+
+    suspend fun deleteAllArticles() = db.getArticleDao().deleteAllArticle()
+
 }

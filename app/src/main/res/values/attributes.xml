@@ -13,5 +13,6 @@
         <attr name="BottomBarTextColor" format="color"/>
         <attr name="IconTint" format="color"/>
         <attr name="AppBackground" format="color"/>
+        <attr name="DeleteButtonIcon" format="reference"/>
     </declare-styleable>
 </resources>

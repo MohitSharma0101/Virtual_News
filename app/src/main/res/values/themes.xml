@@ -24,7 +24,17 @@
         <item name="BottomBarIndicatorColor">#432979FF</item>
         <item name="BottomBarTextColor">@color/light_blue</item>
         <item name="IconTint">@color/black</item>
+        <item name="DeleteButtonIcon">@drawable/ic_trash_2</item>
 
+    </style>
+
+    <style name="CustomMaterialDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Background Color-->
+        <item name="android:background">@color/white</item>
+        <!-- Text Color for title and message -->
+        <item name="colorOnSurface">@color/black</item>
+        <!-- Text Color for buttons -->
+        <item name="colorPrimary">@color/red</item>
     </style>
 
 

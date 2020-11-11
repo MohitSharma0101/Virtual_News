@@ -48,7 +48,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
 //        })
 
         
-        searchAdapter = RecyclerAdapter()
+        searchAdapter = RecyclerAdapter(viewModel)
         search_rec_view.setUpWithAdapter(requireContext(),searchAdapter)
 
     }

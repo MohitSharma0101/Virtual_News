@@ -17,12 +17,13 @@
         <item name="Bookmark_color">@color/light_blue</item>
         <item name="fab_background">@color/light_grey</item>
         <item name="subHeading_color">@color/text_color</item>
-        <item name="Heading_color">@color/grey_bold</item>
+        <item name="Heading_color">@color/white</item>
         <item name="BottomBarIconTintActive">@color/light_blue</item>
         <item name="BottomBarIndicatorColor">@color/dark_blue</item>
         <item name="BottomBarTextColor">@color/light_blue</item>
         <item name="IconTint">#AAACAF</item>
         <item name="textAppearanceListItem">@color/white</item>
         <item name="textColorSearchUrl">@color/white</item>
+        <item name="DeleteButtonIcon">@drawable/ic_trash_2_white</item>
     </style>
 </resources>

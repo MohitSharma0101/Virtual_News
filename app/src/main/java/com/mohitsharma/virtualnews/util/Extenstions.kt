@@ -29,7 +29,7 @@ fun View.show(){
 
 fun RecyclerView.setUpWithAdapter(context: Context,adapter: RecyclerAdapter){
     this.adapter = adapter
-    this.layoutManager = LinearLayoutManager(context)
+   this.layoutManager = LinearLayoutManager(context)
 }
 
 
@@ -62,5 +62,5 @@ private fun formatDate(d: String): String {
    val year = d.substring(0, 4)
    val month = d.substring(5, 7)
    val date = d.substring(8, 10)
-   return "published at: $date-$month-$year"
+   return "Published at : $date-$month-$year"
 }

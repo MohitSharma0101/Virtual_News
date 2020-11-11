@@ -8,6 +8,7 @@ import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
 import com.mohitsharma.virtualnews.repository.NewsRepository
 import com.mohitsharma.virtualnews.util.Resources
+import com.mohitsharma.virtualnews.util.TopBarState
 import com.mohitsharma.virtualnews.util.filterResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,13 +22,25 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     val searchNews: MutableLiveData<Resources<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
 
+    val savedTopBarState: MutableLiveData<TopBarState> = MutableLiveData()
 
-  lateinit var  savedNewsLiveData: LiveData<List<Article>>
+  var  savedNewsLiveData: LiveData<List<Article>>
     var currentNewsPosition = 0
 
     init {
         getBreakingNews("in")
        savedNewsLiveData = getSavedNews()
+        savedTopBarState.postValue(TopBarState.NormalState())
+    }
+
+    fun deleteAllArticle() = viewModelScope.launch {
+        newsRepository.deleteAllArticles()
+    }
+
+    fun deleteSelected(list: MutableList<Article>){
+        for(article in list){
+            deleteArticle(article)
+        }
     }
 
 
