@@ -13,8 +13,11 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.HomeRecAdapter
+import com.mohitsharma.virtualnews.ui.MainActivity
 import com.mohitsharma.virtualnews.util.DepthPageTransformer
 import com.mohitsharma.virtualnews.util.Resources
+import com.mohitsharma.virtualnews.util.show
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.home_fragment.*
 
 

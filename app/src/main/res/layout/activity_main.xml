@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:layout_height="match_parent">
 
     <fragment
         android:id="@+id/nav_host_fragment"
@@ -18,31 +19,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/bottom_nav_graph" />
 
-
-    <me.ibrahimsn.lib.SmoothBottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:elevation="16dp"
-        app:activeItem="@id/home"
-        app:backgroundColor="?attr/BottomBarBackgroundColor"
-        app:cornerRadius="10dp"
-        app:iconSize="25dp"
-        app:iconTint="?attr/IconTint"
-        app:iconTintActive="?attr/BottomBarIconTintActive"
-        app:indicatorColor="?attr/BottomBarIndicatorColor"
-        app:indicatorRadius="20dp"
-        app:itemPadding="9dp"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_bottom"
-        app:sideMargins="10dp"
-        app:textColor="?attr/BottomBarTextColor"
-        app:textSize="15sp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="8dp"
+       app:cardElevation="4dp"
+        app:strokeWidth="0.01dp"
+        app:strokeColor="#707070">
+
+        <me.ibrahimsn.lib.SmoothBottomBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_margin="1dp"
+            app:activeItem="@id/home"
+            app:backgroundColor="?attr/BottomBarBackgroundColor"
+            app:cornerRadius="0dp"
+            app:iconSize="25dp"
+            app:iconTint="?attr/IconTint"
+            app:iconTintActive="?attr/BottomBarIconTintActive"
+            app:indicatorColor="?attr/BottomBarIndicatorColor"
+            app:indicatorRadius="20dp"
+            app:itemPadding="9dp"
+            app:menu="@menu/menu_bottom"
+            app:sideMargins="10dp"
+            app:textColor="?attr/BottomBarTextColor"
+            app:textSize="15sp" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

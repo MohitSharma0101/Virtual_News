@@ -26,6 +26,5 @@
     <color name="reply_orange_500">#F9AA33</color>
     <color name="light_red">#ffd8d9</color>
     <color name="red">#db0f0e</color>
-
-
+    <color name="red_400">#EF5350</color>
 </resources>

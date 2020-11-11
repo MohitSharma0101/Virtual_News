@@ -97,4 +97,10 @@ dependencies {
 
     //gif imagee view
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+
+
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
+
+    //custom Swipe
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
 }

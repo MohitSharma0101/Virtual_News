@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/AppBackground"
     tools:context=".ui.fragments.SearchFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,18 +14,23 @@
         android:layout_marginTop="100dp" />
 
 
-    <com.arlib.floatingsearchview.FloatingSearchView
-        android:id="@+id/floating_search_view"
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
+        style="@style/MaterialSearchBarLight"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:floatingSearch_close_search_on_keyboard_dismiss="true"
-        app:floatingSearch_leftActionMode="showSearch"
-        app:floatingSearch_searchBarMarginLeft="16dp"
-        app:floatingSearch_searchBarMarginRight="16dp"
-        app:floatingSearch_searchBarMarginTop="16dp"
-        app:floatingSearch_searchHint="Search..."
-        app:floatingSearch_showSearchKey="false"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="8dp"
+        app:mt_maxSuggestionsCount="10"
+        app:mt_hint="Search"
+        android:saveEnabled="true"
 
-        app:floatingSearch_suggestionsListAnimDuration="250" />
+        app:mt_placeholder="Search"
+        app:mt_roundedSearchBarEnabled="true"
+        app:mt_searchIconUseTint="true"
+        app:mt_speechMode="false"
 
+
+
+        />
 </FrameLayout>

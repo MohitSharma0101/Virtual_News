@@ -2,6 +2,7 @@ package com.mohitsharma.virtualnews.util
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
 import android.widget.Adapter
@@ -17,6 +18,13 @@ import com.mohitsharma.virtualnews.model.NewsResponse
 
 fun Context.toast(msg:String){
    Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+}
+
+fun View.hide(){
+    this.visibility = View.GONE
+}
+fun View.show(){
+    this.visibility = View.VISIBLE
 }
 
 fun RecyclerView.setUpWithAdapter(context: Context,adapter: RecyclerAdapter){

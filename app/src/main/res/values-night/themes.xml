@@ -22,5 +22,7 @@
         <item name="BottomBarIndicatorColor">@color/dark_blue</item>
         <item name="BottomBarTextColor">@color/light_blue</item>
         <item name="IconTint">#AAACAF</item>
+        <item name="textAppearanceListItem">@color/white</item>
+        <item name="textColorSearchUrl">@color/white</item>
     </style>
 </resources>
