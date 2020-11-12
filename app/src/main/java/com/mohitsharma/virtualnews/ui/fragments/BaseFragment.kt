@@ -14,7 +14,7 @@ abstract class BaseFragment(layout: Int) : Fragment(layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
-        adapter = HomeRecAdapter(requireContext(), viewModel)
+        adapter = HomeRecAdapter(viewModel)
     }
 
 }

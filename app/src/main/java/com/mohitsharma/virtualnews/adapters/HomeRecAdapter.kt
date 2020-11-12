@@ -16,13 +16,14 @@ import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.ui.NewsViewModel
 import com.mohitsharma.virtualnews.util.toast
+import com.thefinestartist.finestwebview.FinestWebView
 import kotlinx.android.synthetic.main.item_article.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.droidsonroids.gif.GifDrawable
 
 
-class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel) : RecyclerView.Adapter<HomeRecAdapter.ViewHolder>() {
+class HomeRecAdapter( var viewModel: NewsViewModel) : RecyclerView.Adapter<HomeRecAdapter.ViewHolder>() {
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -40,6 +41,17 @@ class HomeRecAdapter(var context: Context, var viewModel: NewsViewModel) : Recyc
             tv_date.text = article.publishedAt
             tv_headline.text = article.title
             tv_content.text = article.description
+            val s = "Click to view more at ${article.source.name}"
+            tv_swipe_left.text = s
+            tv_swipe_left.setOnClickListener {
+                FinestWebView.Builder(context)
+                    .toolbarScrollFlags(0)
+                    .titleDefault(article.source.name)
+                    .gradientDivider(true)
+                    .webViewSupportZoom(true)
+                    .statusBarColorRes(R.color.light_blue)
+                    .show(article.url)
+            }
             viewModel.viewModelScope.launch(Dispatchers.Main) {
                 if (viewModel.isArticleSaved(article)) {
                     fab_saved.setImageResource(R.drawable.ic_baseline_done_24)

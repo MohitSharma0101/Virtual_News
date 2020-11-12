@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.RecyclerAdapter
+import com.mohitsharma.virtualnews.ui.MainActivity
 import com.mohitsharma.virtualnews.util.*
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.saved_fragment.*
@@ -25,6 +26,7 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpRecyclerView()
+        observeTopBarState()
 
 //        viewModel.viewModelScope.launch(Dispatchers.Main) {
 //            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer {
@@ -35,6 +37,14 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
             savedAdapter.savedDiffer.submitList(it)
             savedAdapter.notifyDataSetChanged()
         })
+
+        btn_delete_all.setOnClickListener {
+            confirmDeleteAlert()
+        }
+
+    }
+
+    private fun observeTopBarState(){
         viewModel.savedTopBarState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is TopBarState.SelectionState -> {
@@ -58,11 +68,6 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
                 }
             }
         })
-
-        btn_delete_all.setOnClickListener {
-            confirmDeleteAlert()
-        }
-
     }
 
     private  fun clearSelection(){
