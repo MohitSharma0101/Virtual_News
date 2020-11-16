@@ -20,11 +20,12 @@
         <item name="fab_background">@color/white</item>
         <item name="subHeading_color">@color/text_color</item>
         <item name="Heading_color">#E6000000</item>
-        <item name="BottomBarIconTintActive">@color/light_blue</item>
-        <item name="BottomBarIndicatorColor">#432979FF</item>
+        <item name="BottomBarIconTintActive">@color/light_blue2</item>
+        <item name="BottomBarIndicatorColor">@color/blue_tint</item>
         <item name="BottomBarTextColor">@color/light_blue</item>
         <item name="IconTint">@color/black</item>
         <item name="DeleteButtonIcon">@drawable/ic_trash_2</item>
+        <item name="noInternetDrawable">@drawable/no_internet_connection</item>
 
     </style>
 

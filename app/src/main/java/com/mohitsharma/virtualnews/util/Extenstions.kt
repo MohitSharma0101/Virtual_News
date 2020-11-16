@@ -14,6 +14,7 @@ import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.RecyclerAdapter
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
+import com.thefinestartist.finestwebview.FinestWebView
 
 
 fun Context.toast(msg:String){
@@ -32,6 +33,18 @@ fun RecyclerView.setUpWithAdapter(context: Context,adapter: RecyclerAdapter){
    this.layoutManager = LinearLayoutManager(context)
 }
 
+fun Context.showArticleInWebView(article: Article){
+    FinestWebView.Builder(this)
+        .toolbarScrollFlags(0)
+        .titleDefault(article.source.name)
+        .gradientDivider(true)
+        .webViewSupportZoom(true)
+        .statusBarColorRes(R.color.light_blue)
+        .show(article.url)
+}
+
+
+
 
 
  fun NewsResponse.filterResponse(): NewsResponse {
@@ -46,7 +59,7 @@ fun RecyclerView.setUpWithAdapter(context: Context,adapter: RecyclerAdapter){
          list.add(article)
       }
    }
-   this.articles = this.articles.minus(list)
+   this.articles = this.articles.minus(list) as MutableList<Article>
    return this
 }
 

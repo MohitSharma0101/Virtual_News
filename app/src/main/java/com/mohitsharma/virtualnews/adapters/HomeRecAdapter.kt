@@ -15,6 +15,7 @@ import com.bumptech.glide.signature.ObjectKey
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.ui.NewsViewModel
+import com.mohitsharma.virtualnews.util.showArticleInWebView
 import com.mohitsharma.virtualnews.util.toast
 import com.thefinestartist.finestwebview.FinestWebView
 import kotlinx.android.synthetic.main.item_article.view.*
@@ -44,13 +45,7 @@ class HomeRecAdapter( var viewModel: NewsViewModel) : RecyclerView.Adapter<HomeR
             val s = "Click to view more at ${article.source.name}"
             tv_swipe_left.text = s
             tv_swipe_left.setOnClickListener {
-                FinestWebView.Builder(context)
-                    .toolbarScrollFlags(0)
-                    .titleDefault(article.source.name)
-                    .gradientDivider(true)
-                    .webViewSupportZoom(true)
-                    .statusBarColorRes(R.color.light_blue)
-                    .show(article.url)
+              context.showArticleInWebView(article)
             }
             viewModel.viewModelScope.launch(Dispatchers.Main) {
                 if (viewModel.isArticleSaved(article)) {

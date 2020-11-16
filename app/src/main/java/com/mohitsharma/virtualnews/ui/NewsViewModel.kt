@@ -18,6 +18,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     val breakingNews: MutableLiveData<Resources<NewsResponse>> = MutableLiveData()
     private var breakingNewsPage = 1
+    var breakingNewsResponse: NewsResponse? = null
 
     val searchNews: MutableLiveData<Resources<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
@@ -60,7 +61,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         return a != null
     }
 
-    private fun getBreakingNews(countryCode: String) = viewModelScope.launch {
+     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         breakingNews.postValue(Resources.Loading())
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
@@ -76,7 +77,16 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>): Resources<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resources.Success(resultResponse.filterResponse())
+                breakingNewsPage++
+                if(breakingNewsResponse == null) {
+                    breakingNewsResponse = resultResponse
+                } else {
+                    val oldArticles = breakingNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+              val newsResponse = breakingNewsResponse ?: resultResponse
+                return Resources.Success(newsResponse.filterResponse())
             }
         }
         return Resources.Error(response.message())

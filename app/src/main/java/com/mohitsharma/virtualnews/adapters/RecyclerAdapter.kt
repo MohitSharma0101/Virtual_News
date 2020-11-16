@@ -20,6 +20,7 @@ import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.ui.NewsViewModel
 import com.mohitsharma.virtualnews.util.TopBarState
+import com.mohitsharma.virtualnews.util.showArticleInWebView
 import com.thefinestartist.finestwebview.FinestWebView
 import com.thefinestartist.finestwebview.FinestWebViewActivity
 import kotlinx.android.synthetic.main.saved_article.view.*
@@ -81,13 +82,7 @@ class RecyclerAdapter(private val viewModel: NewsViewModel) :
                         }
                     }
                     else -> {
-                        FinestWebView.Builder(context)
-                            .toolbarScrollFlags(0)
-                            .titleDefault(article.source.name)
-                            .gradientDivider(true)
-                            .webViewSupportZoom(true)
-                            .statusBarColorRes(R.color.light_blue)
-                            .show(article.url)
+                        context.showArticleInWebView(article)
                     }
                 }
             }

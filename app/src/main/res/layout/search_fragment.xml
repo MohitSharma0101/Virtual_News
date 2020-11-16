@@ -7,30 +7,15 @@
     android:background="?attr/AppBackground"
     tools:context=".ui.fragments.SearchFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_rec_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp" />
 
 
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        android:id="@+id/searchBar"
-        style="@style/MaterialSearchBarLight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:elevation="8dp"
-        app:mt_maxSuggestionsCount="10"
-        app:mt_hint="Search"
-        android:saveEnabled="true"
-
-        app:mt_placeholder="Search"
-        app:mt_roundedSearchBarEnabled="true"
-        app:mt_searchIconUseTint="true"
-        app:mt_speechMode="false"
+<com.google.android.material.imageview.ShapeableImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:src="?attr/noInternetDrawable"
+    />
 
 
-
-        />
 </FrameLayout>

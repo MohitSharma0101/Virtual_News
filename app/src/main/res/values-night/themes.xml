@@ -25,5 +25,6 @@
         <item name="textAppearanceListItem">@color/white</item>
         <item name="textColorSearchUrl">@color/white</item>
         <item name="DeleteButtonIcon">@drawable/ic_trash_2_white</item>
+        <item name="noInternetDrawable">@drawable/no_internet_connection_dark</item>
     </style>
 </resources>
