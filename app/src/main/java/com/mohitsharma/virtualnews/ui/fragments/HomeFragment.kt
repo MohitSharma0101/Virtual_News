@@ -1,5 +1,6 @@
 package com.mohitsharma.virtualnews.ui.fragments
 
+import am.appwise.components.ni.NoInternetDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.util.DepthPageTransformer
 import com.mohitsharma.virtualnews.util.Resources
 import kotlinx.android.synthetic.main.home_fragment.*
+import java.lang.Exception
 
 
 class HomeFragment : BaseFragment(R.layout.home_fragment) {
@@ -18,6 +20,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
 
         setUpVIewPager()
         observeBreakingNews()
+
 
     }
 
@@ -32,6 +35,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                     loading_view.visibility = View.GONE
                     it.data?.let { newsResponse ->
                         adapter.differ.submitList(newsResponse.articles)
+                        adapter.notifyDataSetChanged()
                     }
                 }
                 else -> {
@@ -49,14 +53,22 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
 
-                val currentItem:Int = view_pager.currentItem + 1
-                val lastItem:Int = adapter.itemCount
-                Log.d("current" , currentItem.toString())
-                Log.d("last" , lastItem.toString())
+                val currentItem: Int = view_pager.currentItem + 1
+                viewModel.currentNewsPosition = currentItem
+                val lastItem: Int = adapter.itemCount
+                Log.d("current", currentItem.toString())
+                Log.d("last", lastItem.toString())
 
-                if (currentItem == lastItem ){
-                    viewModel.getBreakingNews("in")
-                    Log.d("Last item " , "reached")
+                if (currentItem == lastItem) {
+                    try {
+                        viewModel.getBreakingNews("in")
+                        adapter.notifyDataSetChanged()
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+
+
+                    Log.d("Last item ", "reached")
                 }
 
                 super.onPageSelected(position)
@@ -64,5 +76,13 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         })
     }
 
+
+
+    override fun onResume() {
+        view_pager.let {
+            it.setCurrentItem(viewModel.currentNewsPosition -1)
+        }
+        super.onResume()
+    }
 
 }

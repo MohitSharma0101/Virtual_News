@@ -26,6 +26,7 @@
         <item name="IconTint">@color/black</item>
         <item name="DeleteButtonIcon">@drawable/ic_trash_2</item>
         <item name="noInternetDrawable">@drawable/no_internet_connection</item>
+        <item name="SearchButtonIcon">@drawable/ic_baseline_search_24_black</item>
 
     </style>
 

@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -28,6 +29,15 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         setUpRecyclerView()
         observeTopBarState()
 
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            when(viewModel.savedTopBarState.value){
+                is TopBarState.SelectionState ->clearSelection()
+                else -> findNavController().popBackStack()
+            }
+
+
+        }
+
 //        viewModel.viewModelScope.launch(Dispatchers.Main) {
 //            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer {
 //                savedAdapter.savedDiffer.submitList(it)
@@ -39,6 +49,8 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         })
 
         btn_delete_all.setOnClickListener {
+
+
             confirmDeleteAlert()
         }
 

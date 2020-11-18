@@ -14,6 +14,7 @@
         <attr name="IconTint" format="color"/>
         <attr name="AppBackground" format="color"/>
         <attr name="DeleteButtonIcon" format="reference"/>
+        <attr name="SearchButtonIcon" format="reference"/>
         <attr name="noInternetDrawable" format="reference" />
     </declare-styleable>
 </resources>

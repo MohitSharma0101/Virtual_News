@@ -52,13 +52,12 @@ class HomeRecAdapter( var viewModel: NewsViewModel) : RecyclerView.Adapter<HomeR
                     fab_saved.setImageResource(R.drawable.ic_baseline_done_24)
                 }
             }
-            val gifFromResource = GifDrawable(resources, R.drawable.loading)
             Glide.with(this)
                     .load(article.urlToImage)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .signature(ObjectKey(article.urlToImage))
+                    .signature(ObjectKey(article.title))
                     .centerCrop()
-                    //   .placeholder(gifFromResource)
+                   .placeholder(resources.getDrawable(R.drawable.loading_image_png,null))
                     .error(android.R.drawable.stat_notify_error)
                     .into(iv_content_image)
 

@@ -1,5 +1,6 @@
 package com.mohitsharma.virtualnews.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -95,7 +96,10 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     private fun handleSearchNewsResponse(response: Response<NewsResponse>): Resources<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resources.Success(resultResponse.filterResponse())
+                return if (resultResponse.articles.isNotEmpty())
+                    Resources.Success(resultResponse.filterResponse())
+                else
+                    Resources.Error(response.message())
             }
         }
         return Resources.Error(response.message())

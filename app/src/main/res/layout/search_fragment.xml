@@ -1,21 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/AppBackground"
     tools:context=".ui.fragments.SearchFragment">
 
+    <com.eldersoss.elderssearchview.EldersSearchView
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:esvMargin="5dp"
+        android:visibility="gone"
+        app:esvBackground="@drawable/search_bar_background"
+        app:esvElevation="7dp"
+        app:esvHintText="Search News"
+        app:esvNoFilter="true"
+        app:esvSuggestionsEnabled="false" />
 
 
-<com.google.android.material.imageview.ShapeableImageView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="10dp"
-    android:src="?attr/noInternetDrawable"
-    />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_rec_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/search_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:cardCornerRadius="0dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:fontFamily="sans-serif-medium"
+            android:text="Categories"
+            android:layout_margin="10dp"
+            android:paddingStart="10dp"
+            android:textColor="?attr/Heading_color"
+            android:textSize="25sp" />
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="?attr/SearchButtonIcon"
+            android:background="@color/transparent"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="search news" />
 
 
-</FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        >
+        <include
+            layout="@layout/categories_layout"
+            />
+
+    </ScrollView>
+
+
+
+
+
+
+
+</LinearLayout>

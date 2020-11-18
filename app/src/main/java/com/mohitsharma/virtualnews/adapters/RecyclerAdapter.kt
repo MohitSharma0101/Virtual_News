@@ -60,7 +60,7 @@ class RecyclerAdapter(private val viewModel: NewsViewModel) :
             Glide.with(this)
                 .load(article.urlToImage)
                 .centerCrop()
-                .signature(ObjectKey(article.urlToImage))
+                .signature(ObjectKey(article.title))
                 .into(iv_content_image)
             setOnLongClickListener {
                 selectedItems.add(article)

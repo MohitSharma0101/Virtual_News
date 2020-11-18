@@ -1,13 +1,11 @@
 package com.mohitsharma.virtualnews.util
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewParent
-import android.widget.Adapter
+import android.view.ViewAnimationUtils
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mohitsharma.virtualnews.R
@@ -17,8 +15,8 @@ import com.mohitsharma.virtualnews.model.NewsResponse
 import com.thefinestartist.finestwebview.FinestWebView
 
 
-fun Context.toast(msg:String){
-   Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+fun Context.toast(msg: String){
+   Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
 
 fun View.hide(){
@@ -28,7 +26,36 @@ fun View.show(){
     this.visibility = View.VISIBLE
 }
 
-fun RecyclerView.setUpWithAdapter(context: Context,adapter: RecyclerAdapter){
+fun View.revealWithAnimation(){
+
+    val cx: Int = this.measuredWidth
+    val cy: Int = this.measuredHeight
+    val finalRadius: Int = Math.max(this.width, this.height)
+    val anim = ViewAnimationUtils.createCircularReveal(this, cx, cy, 0f, finalRadius.toFloat())
+    this.show()
+    anim.start()
+
+}
+fun View.hideWithAnimation(){
+
+    val cx: Int = this.measuredWidth
+    val cy: Int = this.measuredHeight
+
+    val initialRadius: Int = Math.max(this.width, this.height)
+
+    val anim = ViewAnimationUtils.createCircularReveal(this, cx, cy, initialRadius.toFloat(), 0f)
+
+    anim.addListener(object : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator?) {
+            super.onAnimationEnd(animation)
+            this@hideWithAnimation.hide()
+        }
+    })
+    anim.start()
+
+}
+
+fun RecyclerView.setUpWithAdapter(context: Context, adapter: RecyclerAdapter){
     this.adapter = adapter
    this.layoutManager = LinearLayoutManager(context)
 }
