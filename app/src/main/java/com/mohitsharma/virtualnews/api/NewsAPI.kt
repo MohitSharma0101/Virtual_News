@@ -14,7 +14,9 @@ interface NewsAPI {
             @Query("page")
             pageCount:Int = 1,
             @Query("apikey")
-            key: String = KEY.value
+            key: String = KEY.value,
+            @Query("category")
+            category:String? = null
     ):Response<NewsResponse>
 
     @GET("v2/everything")

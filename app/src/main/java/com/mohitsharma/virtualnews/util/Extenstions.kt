@@ -3,6 +3,7 @@ package com.mohitsharma.virtualnews.util
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.Toast
@@ -24,6 +25,10 @@ fun View.hide(){
 }
 fun View.show(){
     this.visibility = View.VISIBLE
+}
+
+fun Float.convertToDp(context: Context): Float {
+    return this / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
 }
 
 fun View.revealWithAnimation(){

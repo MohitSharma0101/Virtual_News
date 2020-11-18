@@ -19,4 +19,19 @@
         android:src="@drawable/news_loading"
         android:visibility="gone" />
 
+    <fr.castorflex.android.circularprogressbar.CircularProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:indeterminate="true"
+        app:cpb_color="@color/light_blue"
+        app:cpb_colors="@array/mycolors"
+        app:cpb_rotation_speed="1.0"
+        app:cpb_sweep_speed="1.5"
+        app:cpb_stroke_width="4dp"
+        app:cpb_min_sweep_angle="10"
+        app:cpb_max_sweep_angle="300"
+        android:layout_gravity="center"
+        />
+
 </FrameLayout>

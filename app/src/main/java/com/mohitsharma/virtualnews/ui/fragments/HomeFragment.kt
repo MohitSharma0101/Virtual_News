@@ -7,8 +7,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.mohitsharma.virtualnews.R
-import com.mohitsharma.virtualnews.util.DepthPageTransformer
-import com.mohitsharma.virtualnews.util.Resources
+import com.mohitsharma.virtualnews.util.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import java.lang.Exception
 
@@ -29,17 +28,21 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resources.Loading -> {
-                    loading_view.visibility = View.VISIBLE
+                    progress_bar.show()
                 }
                 is Resources.Success -> {
-                    loading_view.visibility = View.GONE
+                    progress_bar.hide()
                     it.data?.let { newsResponse ->
                         adapter.differ.submitList(newsResponse.articles)
                         adapter.notifyDataSetChanged()
                     }
                 }
+                is Resources.Error ->{
+                    progress_bar.hide()
+                    requireContext().toast("Error!")
+                }
                 else -> {
-                    loading_view.visibility = View.VISIBLE
+                    progress_bar.show()
                 }
             }
         })

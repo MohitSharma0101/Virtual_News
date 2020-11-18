@@ -1,6 +1,5 @@
 package com.mohitsharma.virtualnews.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,15 +22,18 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     val searchNews: MutableLiveData<Resources<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
-
+    var searchTopBarState: MutableLiveData<TopBarState> = MutableLiveData()
     val savedTopBarState: MutableLiveData<TopBarState> = MutableLiveData()
 
-  var  savedNewsLiveData: LiveData<List<Article>>
+    val categoryNews: MutableLiveData<Resources<NewsResponse>> = MutableLiveData()
+    var categoryNewsPage = 1
+
+    var savedNewsLiveData: LiveData<List<Article>>
     var currentNewsPosition = 0
 
     init {
         getBreakingNews("in")
-       savedNewsLiveData = getSavedNews()
+        savedNewsLiveData = getSavedNews()
         savedTopBarState.postValue(TopBarState.NormalState())
     }
 
@@ -39,8 +41,8 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         newsRepository.deleteAllArticles()
     }
 
-    fun deleteSelected(list: MutableList<Article>){
-        for(article in list){
+    fun deleteSelected(list: MutableList<Article>) {
+        for (article in list) {
             deleteArticle(article)
         }
     }
@@ -50,7 +52,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         newsRepository.saveArticle(article)
     }
     fun deleteArticle(article: Article) = viewModelScope.launch {
-       newsRepository.deleteAricle(article)
+        newsRepository.deleteAricle(article)
     }
 
     suspend fun isArticleSaved(article: Article): Boolean {
@@ -62,7 +64,13 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         return a != null
     }
 
-     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
+    fun getNewsByCategory(category:String) = viewModelScope.launch {
+        categoryNews.postValue(Resources.Loading())
+        val response = newsRepository.getCategoryNews("in",categoryNewsPage, category = category)
+        categoryNews.postValue(handleCategoryNewsResponse(response))
+    }
+
+    fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         breakingNews.postValue(Resources.Loading())
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
@@ -79,14 +87,14 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 breakingNewsPage++
-                if(breakingNewsResponse == null) {
+                if (breakingNewsResponse == null) {
                     breakingNewsResponse = resultResponse
                 } else {
                     val oldArticles = breakingNewsResponse?.articles
                     val newArticles = resultResponse.articles
                     oldArticles?.addAll(newArticles)
                 }
-              val newsResponse = breakingNewsResponse ?: resultResponse
+                val newsResponse = breakingNewsResponse ?: resultResponse
                 return Resources.Success(newsResponse.filterResponse())
             }
         }
@@ -104,9 +112,20 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         }
         return Resources.Error(response.message())
     }
+    private fun handleCategoryNewsResponse(response: Response<NewsResponse>): Resources<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return if (resultResponse.articles.isNotEmpty())
+                    Resources.Success(resultResponse.filterResponse())
+                else
+                    Resources.Error(response.message())
+            }
+        }
+        return Resources.Error(response.message())
+    }
 
     private fun getSavedNews() = newsRepository.getSavedNews()
 
 
-    }
+}
 

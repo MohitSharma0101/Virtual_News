@@ -8,6 +8,7 @@
     android:rowCount="3"
     android:columnOrderPreserved="false">
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/business_card"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_columnWeight="1"
@@ -33,6 +34,7 @@
 
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/entertainment_card"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_columnWeight="1"
@@ -42,6 +44,7 @@
         android:layout_margin="12dp"
         >
         <com.google.android.material.imageview.ShapeableImageView
+
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/flat"
@@ -58,6 +61,7 @@
 
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/health_card"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_columnWeight="1"
@@ -83,6 +87,7 @@
 
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/science_card"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_columnWeight="1"
@@ -108,6 +113,7 @@
 
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/technology_card"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_columnWeight="1"
@@ -133,6 +139,7 @@
 
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/sports_card"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_columnWeight="1"

@@ -16,6 +16,7 @@ import com.mohitsharma.virtualnews.repository.NewsRepository
 import com.mohitsharma.virtualnews.util.hide
 import com.mohitsharma.virtualnews.util.show
 import com.mohitsharma.virtualnews.util.toast
+import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -43,17 +44,8 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
 
+        ExpandableBottomBarNavigationUI.setupWithNavController(bottom_bar, findNavController(R.id.nav_host_fragment))
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_bottom, menu)
-        bottomBar.setupWithNavController(menu!!, findNavController(R.id.nav_host_fragment))
-        return true
-    }
-
-    fun hideBottomBar(){
-        bottomBar.hide()
-        timer.start()
-    }
 }

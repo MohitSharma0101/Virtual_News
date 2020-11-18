@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         app:esvMargin="5dp"
@@ -22,23 +22,18 @@
         app:esvBackground="@drawable/search_bar_background"
         app:esvElevation="7dp"
         app:esvHintText="Search News"
-        app:esvNoFilter="true"
+        app:esvNoFilter="false"
         app:esvSuggestionsEnabled="false" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_rec_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/search_top_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:cardCornerRadius="0dp"
-        >
+        app:cardCornerRadius="0dp" >
         <TextView
+            android:id="@+id/top_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
@@ -60,21 +55,37 @@
 
 
     </com.google.android.material.card.MaterialCardView>
+    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:spb_sections_count="4"
+        app:spb_color="@color/light_blue"
+        app:spb_colors="@array/mycolors"
+        app:spb_speed="2.0"
+        app:spb_stroke_width="4dp"
+        app:spb_stroke_separator_length="4dp"
+        app:spb_reversed="true"
+        app:spb_mirror_mode="true"
+        android:visibility="gone"
+        app:spb_progressiveStart_activated="true"
+        app:spb_progressiveStart_speed="1.5"
+        app:spb_progressiveStop_speed="3.4"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_rec_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <ScrollView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         >
-        <include
-            layout="@layout/categories_layout"
-            />
+        <include layout="@layout/categories_layout" />
 
     </ScrollView>
-
-
-
-
-
-
 
 </LinearLayout>

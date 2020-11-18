@@ -21,7 +21,7 @@
         <item name="BottomBarIconTintActive">@color/light_blue</item>
         <item name="BottomBarIndicatorColor">@color/dark_blue</item>
         <item name="BottomBarTextColor">@color/light_blue</item>
-        <item name="IconTint">#AAACAF</item>
+        <item name="IconTint">@color/white</item>
         <item name="textAppearanceListItem">@color/white</item>
         <item name="textColorSearchUrl">@color/white</item>
         <item name="DeleteButtonIcon">@drawable/ic_trash_2_white</item>
