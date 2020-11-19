@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightStatusBar" tools:targetApi="o">true</item>
         <!-- Customize your theme here. -->
+        <item name="switchStyle">@style/Widget.App.Switch</item>
 
         <item name="AppBackground">#D9FFFFFF</item>
         <item name="BottomBarBackgroundColor">@color/white</item>
@@ -26,7 +27,7 @@
         <item name="IconTint">@color/black</item>
         <item name="DeleteButtonIcon">@drawable/ic_trash_2</item>
         <item name="noInternetDrawable">@drawable/no_internet_connection</item>
-        <item name="SearchButtonIcon">@drawable/ic_baseline_search_24_black</item>
+        <item name="SearchButtonIcon">@drawable/ic_search</item>
 
     </style>
 
@@ -37,6 +38,15 @@
         <item name="colorOnSurface">@color/black</item>
         <!-- Text Color for buttons -->
         <item name="colorPrimary">@color/red</item>
+    </style>
+
+    <style name="Widget.App.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+
+        <item name="colorSecondary">@color/light_blue</item>
     </style>
 
 

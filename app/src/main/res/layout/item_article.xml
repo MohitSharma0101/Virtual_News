@@ -14,7 +14,7 @@
         android:clickable="true"
         android:contentDescription="@string/bookmark"
         android:focusable="true"
-        android:src="@drawable/ic_baseline_arrow_downward_24"
+        android:src="@drawable/ic_icons8_bookmark_outline"
         app:layout_anchor="@id/iv_content_image"
         app:layout_anchorGravity="bottom|end" />
 

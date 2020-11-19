@@ -49,7 +49,7 @@ class HomeRecAdapter( var viewModel: NewsViewModel) : RecyclerView.Adapter<HomeR
             }
             viewModel.viewModelScope.launch(Dispatchers.Main) {
                 if (viewModel.isArticleSaved(article)) {
-                    fab_saved.setImageResource(R.drawable.ic_baseline_done_24)
+                    fab_saved.setImageResource(R.drawable.ic_icons8_bookmark)
                 }
             }
             Glide.with(this)

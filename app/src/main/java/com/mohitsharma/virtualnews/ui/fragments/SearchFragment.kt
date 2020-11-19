@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
@@ -68,17 +69,23 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
             activateCategoryState(Constants.TECHNOLOGY)
         }
 
+        ib_clear_selection.setOnClickListener {
+            viewModel.searchTopBarState.postValue(TopBarState.NormalState())
+        }
+
     }
 
     private fun activateCategoryState(category: String) {
         viewModel.getNewsByCategory(category)
-        viewModel.searchTopBarState.postValue(TopBarState.CategoryState(category))
+        viewModel.searchTopBarState.postValue(TopBarState.CategoryState(category.format()))
     }
 
     private fun observeTopBar() {
         viewModel.searchTopBarState.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is TopBarState.SearchState -> {
+                    ib_clear_selection.hide()
+
                     if (state.query != null) {
                         state.query.let {
                             search_bar.setSearchedPhrase(it)
@@ -90,11 +97,13 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                 }
                 is TopBarState.CategoryState -> {
                     state.category.let {
+                        ib_clear_selection.show()
                         top_bar_title.text = it
                         search_rec_view.show()
                     }
                 }
                 is TopBarState.NormalState -> {
+                    ib_clear_selection.hide()
                     top_bar_title.text = Constants.CATEGORY
                     search_rec_view.hide()
                 }

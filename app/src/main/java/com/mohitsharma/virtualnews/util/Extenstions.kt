@@ -26,6 +26,9 @@ fun View.hide(){
 fun View.show(){
     this.visibility = View.VISIBLE
 }
+fun String.format() :String {
+    return "${this[0].toUpperCase()}${this.substring(1,this.length)}"
+}
 
 fun Float.convertToDp(context: Context): Float {
     return this / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
