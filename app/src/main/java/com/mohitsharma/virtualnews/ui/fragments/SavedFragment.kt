@@ -3,7 +3,6 @@ package com.mohitsharma.virtualnews.ui.fragments
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -12,15 +11,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mohitsharma.virtualnews.R
-import com.mohitsharma.virtualnews.adapters.RecyclerAdapter
-import com.mohitsharma.virtualnews.ui.MainActivity
+import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
 import com.mohitsharma.virtualnews.util.*
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.saved_fragment.*
 
 
 class SavedFragment : BaseFragment(R.layout.saved_fragment) {
-    lateinit var savedAdapter: RecyclerAdapter
+    lateinit var savedAdapter: SavedRecAdapter
     lateinit var itemTouchHelper:ItemTouchHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,7 +102,7 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
 
 
     private fun setUpRecyclerView(){
-        savedAdapter = RecyclerAdapter(viewModel)
+        savedAdapter = SavedRecAdapter(viewModel)
         saved_rec_view.setUpWithAdapter(requireContext(), savedAdapter)
 
         val simpleCallBack = object : ItemTouchHelper.SimpleCallback(

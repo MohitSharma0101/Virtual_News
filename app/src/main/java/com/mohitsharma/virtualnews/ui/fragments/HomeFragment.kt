@@ -20,9 +20,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         setUpVIewPager()
         observeBreakingNews()
 
-
     }
-
 
     private fun observeBreakingNews() {
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
@@ -55,13 +53,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         view_pager.setPageTransformer(DepthPageTransformer())
         view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-
                 val currentItem: Int = view_pager.currentItem + 1
                 viewModel.currentNewsPosition = currentItem
                 val lastItem: Int = adapter.itemCount
-                Log.d("current", currentItem.toString())
-                Log.d("last", lastItem.toString())
-
                 if (currentItem == lastItem) {
                     try {
                         viewModel.getBreakingNews("in")
@@ -69,17 +63,11 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                     }catch (e:Exception){
                         e.printStackTrace()
                     }
-
-
-                    Log.d("Last item ", "reached")
                 }
-
                 super.onPageSelected(position)
             }
         })
     }
-
-
 
     override fun onResume() {
         view_pager.let {

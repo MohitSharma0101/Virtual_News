@@ -123,4 +123,8 @@ dependencies {
 
     //night mode toggle
     implementation 'com.github.shrikanth7698:Night-Mode-Button:V1.0'
+
+    //Data Store
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
+
 }

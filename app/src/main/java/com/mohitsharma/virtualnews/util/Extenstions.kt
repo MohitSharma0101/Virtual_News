@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mohitsharma.virtualnews.R
-import com.mohitsharma.virtualnews.adapters.RecyclerAdapter
+import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
 import com.thefinestartist.finestwebview.FinestWebView
@@ -63,7 +63,7 @@ fun View.hideWithAnimation(){
 
 }
 
-fun RecyclerView.setUpWithAdapter(context: Context, adapter: RecyclerAdapter){
+fun RecyclerView.setUpWithAdapter(context: Context, adapter: SavedRecAdapter){
     this.adapter = adapter
    this.layoutManager = LinearLayoutManager(context)
 }

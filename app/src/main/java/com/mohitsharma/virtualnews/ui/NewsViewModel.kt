@@ -72,8 +72,14 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         breakingNews.postValue(Resources.Loading())
-        val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
-        breakingNews.postValue(handleBreakingNewsResponse(response))
+        try {
+            val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
+            breakingNews.postValue(handleBreakingNewsResponse(response))
+        }catch (e:Exception){
+            e.printStackTrace()
+            breakingNews.postValue(Resources.Error("Error"))
+        }
+
     }
 
     fun getSearchNews(query: String) = viewModelScope.launch {

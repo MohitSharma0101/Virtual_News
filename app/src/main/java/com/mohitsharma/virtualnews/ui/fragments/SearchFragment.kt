@@ -7,8 +7,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mohitsharma.virtualnews.R
-import com.mohitsharma.virtualnews.adapters.RecyclerAdapter
+import com.mohitsharma.virtualnews.adapters.SearchRecAdapter
 import com.mohitsharma.virtualnews.util.*
 import com.mohitsharma.virtualnews.util.Constants.SEARCH_DELAY_TIME
 import kotlinx.android.synthetic.main.categories_layout.*
@@ -16,17 +17,19 @@ import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
 
 class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
-    lateinit var searchAdapter: RecyclerAdapter
+    lateinit var searchAdapter: SearchRecAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchAdapter = RecyclerAdapter(viewModel)
-        search_rec_view.setUpWithAdapter(requireContext(), searchAdapter)
+        searchAdapter = SearchRecAdapter()
+        search_rec_view.apply {
+            adapter = searchAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
 
         observeSearchNews()
         handleBackPress()
@@ -118,7 +121,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                 is Resources.Success -> {
                     it.data?.let { newsResponse ->
                         progress_bar.hide()
-                        searchAdapter.savedDiffer.submitList(newsResponse.articles)
+                        searchAdapter.searchDiffer.submitList(newsResponse.articles)
                     }
                 }
                 is Resources.Loading -> {
@@ -138,7 +141,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
             when (it) {
                 is Resources.Success -> {
                     it.data?.let { newsResponse ->
-                        searchAdapter.savedDiffer.submitList(newsResponse.articles)
+                        searchAdapter.searchDiffer.submitList(newsResponse.articles)
                         progress_bar.hide()
                     }
                 }
