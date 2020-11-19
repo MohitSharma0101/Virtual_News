@@ -20,16 +20,22 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         setUpVIewPager()
         observeBreakingNews()
 
+        btn_retry.setOnClickListener {
+            viewModel.getBreakingNews("in")
+        }
+
     }
 
     private fun observeBreakingNews() {
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resources.Loading -> {
+                    btn_retry.hide()
                     progress_bar.show()
                 }
                 is Resources.Success -> {
                     progress_bar.hide()
+                    btn_retry.hide()
                     it.data?.let { newsResponse ->
                         adapter.differ.submitList(newsResponse.articles)
                         adapter.notifyDataSetChanged()
@@ -38,6 +44,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                 is Resources.Error ->{
                     progress_bar.hide()
                     requireContext().toast("Error!")
+                    btn_retry.show()
                 }
                 else -> {
                     progress_bar.show()

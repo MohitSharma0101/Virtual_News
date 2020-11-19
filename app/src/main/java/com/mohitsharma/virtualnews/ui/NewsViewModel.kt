@@ -66,8 +66,14 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     fun getNewsByCategory(category:String) = viewModelScope.launch {
         categoryNews.postValue(Resources.Loading())
-        val response = newsRepository.getCategoryNews("in",categoryNewsPage, category = category)
-        categoryNews.postValue(handleCategoryNewsResponse(response))
+        try {
+            val response = newsRepository.getCategoryNews("in",categoryNewsPage, category = category)
+            categoryNews.postValue(handleCategoryNewsResponse(response))
+        }catch (e:Exception){
+            e.printStackTrace()
+            categoryNews.postValue(Resources.Error("Error"))
+        }
+
     }
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
@@ -84,8 +90,13 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     fun getSearchNews(query: String) = viewModelScope.launch {
         searchNews.postValue(Resources.Loading())
-        val response = newsRepository.searchNews(query, searchNewsPage)
-        searchNews.postValue(handleSearchNewsResponse(response))
+        try {
+            val response = newsRepository.searchNews(query, searchNewsPage)
+            searchNews.postValue(handleSearchNewsResponse(response))
+        }catch (e:Exception){
+            e.printStackTrace()
+            searchNews.postValue(Resources.Error("Error"))
+        }
 
     }
 

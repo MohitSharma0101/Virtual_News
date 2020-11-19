@@ -11,13 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
     <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/loading_view"
+        android:id="@+id/error_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:src="@drawable/news_loading"
         android:visibility="gone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retry"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        />
 
     <fr.castorflex.android.circularprogressbar.CircularProgressBar
         android:id="@+id/progress_bar"
