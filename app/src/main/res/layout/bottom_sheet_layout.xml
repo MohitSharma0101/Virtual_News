@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_back"
     android:elevation="16dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="15dp"
     android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
@@ -27,29 +29,23 @@
         android:textSize="22sp" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/enable_dark_mode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:cardBackgroundColor="?attr/fab_background"
         app:cardElevation="0dp">
 
-        <com.shrikanthravi.library.NightModeButton
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/nightModeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
 
-            android:layout_gravity="end"
-            android:layout_margin="5dp" />
+             />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/enable_dark_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
@@ -119,6 +115,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -126,7 +123,6 @@
         app:cardElevation="0dp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/feedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"

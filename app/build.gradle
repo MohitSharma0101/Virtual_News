@@ -127,4 +127,7 @@ dependencies {
     //Data Store
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
 
+//    //Country Picker
+//    implementation "com.github.mukeshsolanki:country-picker-android:2.0.4"
+
 }

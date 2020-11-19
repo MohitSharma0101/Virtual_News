@@ -14,6 +14,8 @@ import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
 import com.thefinestartist.finestwebview.FinestWebView
+import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
 
 
 fun Context.toast(msg: String){
@@ -66,6 +68,10 @@ fun View.hideWithAnimation(){
 fun RecyclerView.setUpWithAdapter(context: Context, adapter: SavedRecAdapter){
     this.adapter = adapter
    this.layoutManager = LinearLayoutManager(context)
+}
+
+fun ExpandableBottomBar.setOnItemReselectedListener(listener:((View, ExpandableBottomBarMenuItem) -> Unit)?) {
+    this.onItemReselectedListener = listener
 }
 
 fun Context.showArticleInWebView(article: Article){

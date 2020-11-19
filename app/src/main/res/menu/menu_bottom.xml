@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_baseline_search_24"
+        android:icon="@drawable/ic_search"
         android:title="@string/menu_item_search"
         app:exb_color="@color/light_blue"/>
 

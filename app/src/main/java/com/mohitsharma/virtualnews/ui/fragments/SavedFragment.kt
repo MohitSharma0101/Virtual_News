@@ -1,5 +1,6 @@
 package com.mohitsharma.virtualnews.ui.fragments
 
+import android.content.res.Resources
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
 import com.mohitsharma.virtualnews.util.*
@@ -32,26 +34,16 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
                 is TopBarState.SelectionState ->clearSelection()
                 else -> findNavController().popBackStack()
             }
-
-
         }
 
-//        viewModel.viewModelScope.launch(Dispatchers.Main) {
-//            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer {
-//                savedAdapter.savedDiffer.submitList(it)
-//            })
-//        }
         viewModel.savedNewsLiveData.observe(viewLifecycleOwner, Observer {
             savedAdapter.savedDiffer.submitList(it)
             savedAdapter.notifyDataSetChanged()
         })
 
         btn_delete_all.setOnClickListener {
-
-
             confirmDeleteAlert()
         }
-
     }
 
     private fun observeTopBarState(){
@@ -119,7 +111,13 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
                 val position = viewHolder.adapterPosition
                 val currentArticle = savedAdapter.savedDiffer.currentList[position]
                 viewModel.deleteArticle(currentArticle)
-                context?.toast("Deleted")
+                view?.let { Snackbar.make(it,"Deleted",Snackbar.LENGTH_LONG).apply {
+                    setAction("UNDO"){
+                        viewModel.saveArticle(currentArticle)
+                        savedAdapter.notifyDataSetChanged()
+                    }
+                    show()
+                } }
                 savedAdapter.notifyDataSetChanged()
             }
 
