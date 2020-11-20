@@ -58,6 +58,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/choose_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -65,14 +66,13 @@
         app:cardElevation="0dp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/choose_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
             android:layout_margin="10dp"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Choose Country"
+            android:text="Change Country"
             android:textColor="?attr/Heading_color"
             android:textSize="20sp" />
 
@@ -81,8 +81,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center"
             android:layout_margin="10dp"
+            android:visibility="gone"
             android:background="@color/transparent"
             android:src="@drawable/ic_globe" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_selectedCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:text="India"
+            android:background="@color/light_blue"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView

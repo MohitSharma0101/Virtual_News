@@ -129,5 +129,7 @@ dependencies {
 
 //    //Country Picker
 //    implementation "com.github.mukeshsolanki:country-picker-android:2.0.4"
+    implementation 'com.github.mukeshsolanki:country-picker-android:2.0.4'
+    implementation 'com.hbb20:AndroidCountryPicker:0.0.1'
 
 }

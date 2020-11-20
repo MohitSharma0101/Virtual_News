@@ -25,6 +25,8 @@
 
         layout="@layout/bottom_sheet_layout"/>
 
+    <include layout="@layout/country_picker_layout"/>
+
     <ImageButton
         android:id="@+id/btn_swipe_up"
         android:layout_width="match_parent"
