@@ -52,7 +52,7 @@
             android:layout_margin="10dp"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Enable Dark Mode"
+            android:text="Dark Mode"
             android:textColor="?attr/Heading_color"
             android:textSize="20sp" />
     </androidx.cardview.widget.CardView>
@@ -91,10 +91,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center"
             android:layout_margin="10dp"
-            android:padding="5dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:text="India"
-            android:background="@color/light_blue"
-            android:textColor="@color/white"
+            android:background="@drawable/rounded_back"
+            android:textColor="?attr/Heading_color"
             android:textSize="20sp" />
 
 
@@ -162,6 +165,7 @@
         android:layout_height="0.5dp"
         app:cardElevation="0dp"
         app:cardBackgroundColor="#707070"
+        android:layout_margin="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         />

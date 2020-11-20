@@ -106,9 +106,11 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                     }
                 }
                 is TopBarState.NormalState -> {
+                    search_bar.hide()
                     ib_clear_selection.hide()
                     top_bar_title.text = Constants.CATEGORY
                     search_rec_view.hide()
+                    search_top_bar.show()
                 }
             }
         })
@@ -128,7 +130,9 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                     progress_bar.show()
                 }
                 is Resources.Error -> {
+                    progress_bar.hide()
                     requireContext().toast("No Result Found!")
+                    viewModel.searchTopBarState.postValue(TopBarState.NormalState())
                 }
                 else -> {
                 }
@@ -151,6 +155,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                 is Resources.Error -> {
                     progress_bar.hide()
                     requireContext().toast("No Result Found!")
+                    viewModel.searchTopBarState.postValue(TopBarState.NormalState())
                 }
                 else -> {
                 }

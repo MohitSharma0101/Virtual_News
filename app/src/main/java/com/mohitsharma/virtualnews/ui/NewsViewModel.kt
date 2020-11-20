@@ -1,9 +1,6 @@
 package com.mohitsharma.virtualnews.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
 import com.mohitsharma.virtualnews.repository.NewsRepository
@@ -30,9 +27,11 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     var savedNewsLiveData: LiveData<List<Article>>
     var currentNewsPosition = 0
+    val currentCountryLiveData =  newsRepository.getDataStore().readCountryFromDataStore.asLiveData()
+
+    var currentCountry ="in"
 
     init {
-        getBreakingNews("in")
         savedNewsLiveData = getSavedNews()
         savedTopBarState.postValue(TopBarState.NormalState())
     }
@@ -64,10 +63,10 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         return a != null
     }
 
-    fun getNewsByCategory(category:String) = viewModelScope.launch {
+    fun getNewsByCategory(category:String,countryCode: String=currentCountry) = viewModelScope.launch {
         categoryNews.postValue(Resources.Loading())
         try {
-            val response = newsRepository.getCategoryNews("in",categoryNewsPage, category = category)
+            val response = newsRepository.getCategoryNews(countryCode,categoryNewsPage, category = category)
             categoryNews.postValue(handleCategoryNewsResponse(response))
         }catch (e:Exception){
             e.printStackTrace()
@@ -76,7 +75,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     }
 
-    fun getBreakingNews(countryCode: String) = viewModelScope.launch {
+    fun getBreakingNews(countryCode: String = currentCountry) = viewModelScope.launch {
         breakingNews.postValue(Resources.Loading())
         try {
             val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)

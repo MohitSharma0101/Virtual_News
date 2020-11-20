@@ -24,6 +24,11 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             viewModel.getBreakingNews("in")
         }
 
+        viewModel.currentCountryLiveData.observe(viewLifecycleOwner, Observer {
+           viewModel.getBreakingNews(it)
+            viewModel.currentCountry = it
+        })
+
     }
 
     private fun observeBreakingNews() {
@@ -65,7 +70,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                 val lastItem: Int = adapter.itemCount
                 if (currentItem == lastItem) {
                     try {
-                        viewModel.getBreakingNews("in")
+                        viewModel.getBreakingNews(viewModel.currentCountry)
                         adapter.notifyDataSetChanged()
                     }catch (e:Exception){
                         e.printStackTrace()

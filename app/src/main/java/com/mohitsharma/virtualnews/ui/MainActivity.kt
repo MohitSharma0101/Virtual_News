@@ -1,35 +1,26 @@
 package com.mohitsharma.virtualnews.ui
 
 import am.appwise.components.ni.NoInternetDialog
-import android.content.Context
+import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GestureDetectorCompat
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.hbb20.countrypicker.models.CPCountry
-import com.hbb20.countrypicker.view.prepareCustomCountryPickerView
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.database.ArticleDatabase
-import com.mohitsharma.virtualnews.repository.DataStoreRepository
 import com.mohitsharma.virtualnews.repository.NewsRepository
 import com.mohitsharma.virtualnews.util.countryPicker.CustomCountryPicker
 import com.mohitsharma.virtualnews.util.setOnItemReselectedListener
 import com.mohitsharma.virtualnews.util.swipeDetector.SwipeActions
 import com.mohitsharma.virtualnews.util.swipeDetector.SwipeGestureDetector
-import com.mohitsharma.virtualnews.util.toast
-import com.mukesh.countrypicker.CountryPicker
-import com.mukesh.countrypicker.listeners.OnCountryPickerListener
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
@@ -37,20 +28,19 @@ import kotlinx.android.synthetic.main.country_picker_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: NewsViewModel
     lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
-    lateinit var dataStoreRepository: DataStoreRepository
+    lateinit var newsRepository: NewsRepository
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        
-        dataStoreRepository = DataStoreRepository(this)
-        dataStoreRepository.readUiModeFromDataStore.asLiveData()
+        newsRepository = NewsRepository(this, ArticleDatabase(this))
+        newsRepository.getDataStore().readUiModeFromDataStore.asLiveData()
             .observe(this, Observer { isDarkMode ->
                 nightModeButton.isChecked = isDarkMode
             })
@@ -60,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        val newsRepository = NewsRepository(ArticleDatabase(this))
+
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
@@ -68,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         setUpBottomSheet()
         noInternetAlert()
         detectSwipeGestures()
-//        dataStoreRepository.readCountryFromDataStore.asLiveData()
+
 
         val navController = findNavController(R.id.nav_host_fragment)
         ExpandableBottomBarNavigationUI.setupWithNavController(
@@ -100,20 +90,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun restartActivity() {
-        startActivity(Intent(applicationContext, MainActivity::class.java))
+        val options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+        startActivity(Intent(applicationContext, MainActivity::class.java),options.toBundle())
         finish()
     }
 
     private fun isDarkMode(isDarkMode: Boolean) = GlobalScope.launch(Dispatchers.IO) {
-        dataStoreRepository.saveUiMode(isDarkMode)
+        newsRepository.getDataStore().saveUiMode(isDarkMode)
     }
-    private fun saveCurrentCountry(country:String) =GlobalScope.launch(Dispatchers.IO) {
-        dataStoreRepository.saveToDataStore(country)
+    private fun saveCurrentCountry(country: String) = GlobalScope.launch(Dispatchers.IO) {
+        newsRepository.getDataStore().saveToDataStore(country)
     }
 
 
     private fun setUpBottomSheet(){
-        val countryPicker =   CustomCountryPicker(this)
+      val  countryPicker =   CustomCountryPicker(this)
+        viewModel.currentCountryLiveData.observe(this, Observer {
+            tv_selectedCountry.text = countryPicker.getCountryByCode(it)
+            viewModel.currentCountry = it
+        })
+
         enable_dark_mode.setOnClickListener {
             nightModeButton.performClick()
         }
@@ -131,10 +127,14 @@ class MainActivity : AppCompatActivity() {
         choose_country.setOnClickListener {
             countryPicker.show(country_picker_bottom_sheet)
             countryPicker.adapter.setOnCountrySelectedListener {
-                tv_selectedCountry.text = it.name
+                tv_selectedCountry.apply {
+                    text = it.name
+                    tag = it.name
+                }
                saveCurrentCountry(it.code)
                 countryPicker.dismiss()
                 restartActivity()
+
             }
         }
 

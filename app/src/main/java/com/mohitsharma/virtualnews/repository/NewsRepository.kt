@@ -1,10 +1,11 @@
 package com.mohitsharma.virtualnews.repository
 
+import android.content.Context
 import com.mohitsharma.virtualnews.api.RetrofitInstance
 import com.mohitsharma.virtualnews.database.ArticleDatabase
 import com.mohitsharma.virtualnews.model.Article
 
-class NewsRepository (private val db:ArticleDatabase){
+class NewsRepository (val context: Context,private val db:ArticleDatabase){
 
     suspend fun getBreakingNews(countryCode: String, pageNumber: Int) =
         RetrofitInstance.api.getBreakingNews(countryCode, pageNumber)
@@ -23,5 +24,7 @@ class NewsRepository (private val db:ArticleDatabase){
     fun getSavedNews() = db.getArticleDao().getAllArticles()
 
     suspend fun deleteAllArticles() = db.getArticleDao().deleteAllArticle()
+
+    fun getDataStore() = DataStoreRepository(context)
 
 }
