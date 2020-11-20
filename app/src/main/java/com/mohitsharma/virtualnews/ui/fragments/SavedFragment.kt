@@ -37,6 +37,11 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         }
 
         viewModel.savedNewsLiveData.observe(viewLifecycleOwner, Observer {
+            if(it.isEmpty()){
+                iv_no_saved_news.show()
+            } else {
+                iv_no_saved_news.hide()
+            }
             savedAdapter.savedDiffer.submitList(it)
             savedAdapter.notifyDataSetChanged()
         })
@@ -85,6 +90,7 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
             .setMessage("Are you sure You want to delete All saved news?")
             .setPositiveButton("Yes") {_,_ ->
                 viewModel.deleteAllArticle()
+
             }
             .setNegativeButton("No") { _,_ ->
             }
@@ -96,6 +102,16 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
     private fun setUpRecyclerView(){
         savedAdapter = SavedRecAdapter(viewModel)
         saved_rec_view.setUpWithAdapter(requireContext(), savedAdapter)
+//        savedAdapter.registerAdapterDataObserver(object :RecyclerView.AdapterDataObserver(){
+//            override fun onChanged() {
+//                super.onChanged()
+//                if(adapter.differ.currentList.isEmpty()){
+//                    iv_no_saved_news.show()
+//                }else{
+//                    iv_no_saved_news.hide()
+//                }
+//            }
+//        })
 
         val simpleCallBack = object : ItemTouchHelper.SimpleCallback(
             0, ItemTouchHelper.LEFT

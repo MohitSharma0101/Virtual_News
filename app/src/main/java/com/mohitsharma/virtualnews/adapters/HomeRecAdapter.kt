@@ -53,14 +53,13 @@ class HomeRecAdapter( var viewModel: NewsViewModel) : RecyclerView.Adapter<HomeR
                 }
             }
             Glide.with(this)
-                    .load(article.urlToImage)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .signature(ObjectKey(article.title))
-                    .centerCrop()
-                   .placeholder(resources.getDrawable(R.drawable.loading_image_png,null))
-                    .error(android.R.drawable.stat_notify_error)
-                    .into(iv_content_image)
-
+                .load(article.urlToImage)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .signature(ObjectKey(article.title))
+                .centerCrop()
+                .placeholder(resources.getDrawable(R.drawable.photo_placeholder, null))
+                .error(R.drawable.photo_placeholder)
+                .into(iv_content_image)
             fab_saved.setOnClickListener {
                 viewModel.saveArticle(article)
                 context.toast("Saved")

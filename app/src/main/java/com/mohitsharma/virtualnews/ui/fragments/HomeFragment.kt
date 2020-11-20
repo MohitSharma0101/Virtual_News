@@ -25,7 +25,13 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         }
 
         viewModel.currentCountryLiveData.observe(viewLifecycleOwner, Observer {
-           viewModel.getBreakingNews(it)
+            adapter.differ.currentList.apply {
+                if (this.isEmpty()){
+                    viewModel.getBreakingNews(it)
+                }
+                if(!this.containsAll(this))
+                    viewModel.getBreakingNews(it)
+            }
             viewModel.currentCountry = it
         })
 
@@ -35,12 +41,14 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resources.Loading -> {
+                    retry_view.hide()
                     btn_retry.hide()
                     progress_bar.show()
                 }
                 is Resources.Success -> {
                     progress_bar.hide()
                     btn_retry.hide()
+                    retry_view.hide()
                     it.data?.let { newsResponse ->
                         adapter.differ.submitList(newsResponse.articles)
                         adapter.notifyDataSetChanged()
@@ -50,6 +58,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                     progress_bar.hide()
                     requireContext().toast("Error!")
                     btn_retry.show()
+                    retry_view.show()
                 }
                 else -> {
                     progress_bar.show()

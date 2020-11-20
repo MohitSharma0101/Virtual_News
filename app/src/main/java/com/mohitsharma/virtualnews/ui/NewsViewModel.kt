@@ -32,6 +32,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     var currentCountry ="in"
 
     init {
+
         savedNewsLiveData = getSavedNews()
         savedTopBarState.postValue(TopBarState.NormalState())
     }

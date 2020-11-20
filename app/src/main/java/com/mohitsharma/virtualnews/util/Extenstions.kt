@@ -89,20 +89,38 @@ fun Context.showArticleInWebView(article: Article){
 
 
  fun NewsResponse.filterResponse(): NewsResponse {
-   val list = mutableListOf<Article>()
-   for (article in this.articles) {
-      if (article.description != "" && article.description != null) {
-         article.apply {
-            publishedAt = formatDate(publishedAt)
-            author = formatAuthor(author)
+
+         val list = mutableListOf<Article>()
+         for (article in this.articles) {
+             if (article.description != "" && article.description != null) {
+                 article.apply {
+                     if(ifNotFormatted(this)){
+                         publishedAt = formatDate(publishedAt)
+                         author = formatAuthor(author)
+                     }
+                 }
+             } else {
+                 list.add(article)
+             }
          }
-      } else {
-         list.add(article)
-      }
-   }
-   this.articles = this.articles.minus(list) as MutableList<Article>
-   return this
+         this.articles = this.articles.minus(list) as MutableList<Article>
+
+         return this
+
 }
+
+private fun ifNotFormatted(article:Article):Boolean{
+    article.author.apply {
+        if(this != null){
+            if( this.isNotEmpty() && this.length > 6){
+                val source = this.substring(0..5)
+                return source != "Source"
+            }
+        }
+    }
+    return true
+}
+
 
 private fun formatAuthor(a: String): String {
    return if (a == "" || a == null) {
