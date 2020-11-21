@@ -30,4 +30,6 @@
         <item name="noInternetDrawable">@drawable/no_internet_connection_dark</item>
         <item name="SearchButtonIcon">@drawable/ic_baseline_search_24</item>
     </style>
+
+
 </resources>

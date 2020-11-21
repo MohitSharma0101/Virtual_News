@@ -49,5 +49,9 @@
         <item name="colorSecondary">@color/light_blue</item>
     </style>
 
+    <style name="SplashScreenTheme"  parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <item name="android:windowBackground">@drawable/splash_screen_back</item>
+    </style>
+
 
 </resources>

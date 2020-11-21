@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_VirtualNews)
         newsRepository = NewsRepository(this, ArticleDatabase(this))
         newsRepository.getDataStore().readUiModeFromDataStore.asLiveData()
             .observe(this, Observer { isDarkMode ->

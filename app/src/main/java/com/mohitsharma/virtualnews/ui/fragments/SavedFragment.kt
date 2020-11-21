@@ -14,6 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
+import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.util.*
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.saved_fragment.*
@@ -83,35 +84,22 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         findNavController().navigate(R.id.savedFragment)
     }
 
-    private fun confirmDeleteAlert(){
-        val alertDialog = MaterialAlertDialogBuilder(requireContext(),R.style.CustomMaterialDialog)
+    private fun confirmDeleteAlert() =  MaterialAlertDialogBuilder(requireContext(),R.style.CustomMaterialDialog)
             .setIcon(R.drawable.ic_trash_2)
             .setTitle("Delete All Articles")
             .setMessage("Are you sure You want to delete All saved news?")
             .setPositiveButton("Yes") {_,_ ->
                 viewModel.deleteAllArticle()
-
             }
             .setNegativeButton("No") { _,_ ->
             }
             .show()
-    }
 
 
 
     private fun setUpRecyclerView(){
         savedAdapter = SavedRecAdapter(viewModel)
         saved_rec_view.setUpWithAdapter(requireContext(), savedAdapter)
-//        savedAdapter.registerAdapterDataObserver(object :RecyclerView.AdapterDataObserver(){
-//            override fun onChanged() {
-//                super.onChanged()
-//                if(adapter.differ.currentList.isEmpty()){
-//                    iv_no_saved_news.show()
-//                }else{
-//                    iv_no_saved_news.hide()
-//                }
-//            }
-//        })
 
         val simpleCallBack = object : ItemTouchHelper.SimpleCallback(
             0, ItemTouchHelper.LEFT
