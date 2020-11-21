@@ -3,11 +3,13 @@ package com.mohitsharma.virtualnews.util
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
+import android.content.Intent
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mohitsharma.virtualnews.R
@@ -43,6 +45,16 @@ fun View.showKeyboard(){
         this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }
+
+fun View.hideKeyboard(){
+    this.clearFocus()
+    val inputMethodManager: InputMethodManager =
+        this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+}
+
+
+fun Context.getColor(id:Int) =  ContextCompat.getColor(this, id)
 
 fun View.revealWithAnimation(){
 
@@ -90,6 +102,15 @@ fun Context.showArticleInWebView(article: Article){
         .webViewSupportZoom(true)
         .statusBarColorRes(R.color.light_blue)
         .show(article.url)
+}
+
+fun Context.share(article: Article){
+        val share = Intent(Intent.ACTION_SEND)
+        share.type = "text/plain"
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+        share.putExtra(Intent.EXTRA_SUBJECT, article.title)
+        share.putExtra(Intent.EXTRA_TEXT, article.url)
+       this.startActivity(Intent.createChooser(share, "Virtual News"))
 }
 
 

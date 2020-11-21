@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: NewsViewModel
     lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     lateinit var newsRepository: NewsRepository
+    private lateinit var  countryPicker: CustomCountryPicker
+    lateinit var noInternetDialog: NoInternetDialog
 
 
 
@@ -50,16 +52,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-
+        countryPicker  =   CustomCountryPicker(this).attach(country_picker_bottom_sheet)
 
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         setUpBottomSheet()
-        noInternetAlert()
         detectSwipeGestures()
 
+        noInternetDialog = noInternetAlert()
 
         val navController = findNavController(R.id.nav_host_fragment)
         ExpandableBottomBarNavigationUI.setupWithNavController(
@@ -105,7 +107,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setUpBottomSheet(){
-      val  countryPicker =   CustomCountryPicker(this)
         viewModel.currentCountryLiveData.observe(this, Observer {
             tv_selectedCountry.text = countryPicker.getCountryByCode(it)
             viewModel.currentCountry = it
@@ -126,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         choose_country.setOnClickListener {
-            countryPicker.show(country_picker_bottom_sheet)
+            countryPicker.show()
             countryPicker.adapter.setOnCountrySelectedListener {
                 tv_selectedCountry.apply {
                     text = it.name
@@ -162,5 +163,21 @@ class MainActivity : AppCompatActivity() {
         .setWifiLoaderColor(resources.getColor(R.color.light_blue))
         .build()
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        noInternetDialog.onDestroy()
+    }
+
+
+    override fun onBackPressed() {
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED){
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            countryPicker.dismiss()
+        }else{
+            super.onBackPressed()
+        }
+
+    }
 
 }

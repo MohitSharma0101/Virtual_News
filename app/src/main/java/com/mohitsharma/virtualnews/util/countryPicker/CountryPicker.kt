@@ -21,10 +21,13 @@ class CustomCountryPicker(val context: Context) {
         "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro", "rs", "ru", "sa", "se", "sg", "si", "sk", "th",
         "tr", "tw", "ua", "us", "ve", "za")
 
+    fun attach(bottomSheet: LinearLayout): CustomCountryPicker{
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        setUpRecView(bottomSheet)
+        return this
+    }
 
-     fun show(bottomSheet: LinearLayout):CustomCountryPicker {
-         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-         setUpRecView(bottomSheet)
+     fun show():CustomCountryPicker {
          bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
          return this
      }

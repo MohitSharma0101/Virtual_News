@@ -1,10 +1,8 @@
 package com.mohitsharma.virtualnews.ui.fragments
 
-import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,8 +11,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
+import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.util.*
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import com.mohitsharma.virtualnews.util.swipeDetector.ItemTouchHelperCallback
+import com.mohitsharma.virtualnews.util.swipeDetector.RecyclerViewSwipe
 import kotlinx.android.synthetic.main.saved_fragment.*
 
 
@@ -98,72 +98,43 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
     private fun setUpRecyclerView() {
         savedAdapter = SavedRecAdapter(viewModel)
         saved_rec_view.setUpWithAdapter(requireContext(), savedAdapter)
-
-        val simpleCallBack = object : ItemTouchHelper.SimpleCallback(
-            0, ItemTouchHelper.LEFT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        val simpleCallBack = ItemTouchHelperCallback(object : RecyclerViewSwipe {
+            override fun onSwipeLeft(viewHolder: RecyclerView.ViewHolder) {
                 val position = viewHolder.adapterPosition
                 val currentArticle = savedAdapter.savedDiffer.currentList[position]
-                viewModel.deleteArticle(currentArticle)
-                view?.let {
-                    Snackbar.make(it, "Deleted", Snackbar.LENGTH_LONG).apply {
-                        setAction("UNDO") {
-                            viewModel.saveArticle(currentArticle)
-                            savedAdapter.notifyDataSetChanged()
-                        }
-                        show()
-                    }
-                }
+                deleteArticle(currentArticle)
+            }
+
+            override fun onSwipeRight(viewHolder: RecyclerView.ViewHolder) {
+                val position = viewHolder.adapterPosition
+                val currentArticle = savedAdapter.savedDiffer.currentList[position]
+                requireContext().share(currentArticle)
                 savedAdapter.notifyDataSetChanged()
             }
 
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                RecyclerViewSwipeDecorator.Builder(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                ).addSwipeLeftBackgroundColor(
-                    ContextCompat.getColor(requireContext(), R.color.red_400)
-                )
-                    .addSwipeLeftActionIcon(R.drawable.ic_trash_2_white)
-                    .create()
-                    .decorate()
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
-            }
+            override fun addSwipeLeftBackgroundColor(): Int = requireContext().getColor(R.color.red_400)
 
-        }
+            override fun addSwipeRightBackgroundColor(): Int = requireContext().getColor(R.color.transparent)
+
+            override fun addSwipeLeftActionIcon(): Int = R.drawable.ic_trash_2_white
+        })
+
         itemTouchHelper = ItemTouchHelper(simpleCallBack)
         itemTouchHelper.attachToRecyclerView(saved_rec_view)
     }
 
+    private fun deleteArticle(article: Article) {
+        viewModel.deleteArticle(article)
+        view?.let {
+            Snackbar.make(it, "Deleted", Snackbar.LENGTH_LONG).apply {
+                setAction("UNDO") {
+                    viewModel.saveArticle(article)
+                    savedAdapter.notifyDataSetChanged()
+                }
+                show()
+            }
+        }
+        savedAdapter.notifyDataSetChanged()
+    }
 
 }

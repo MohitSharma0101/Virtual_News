@@ -32,13 +32,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Retry"
-            android:textColor="@color/light_blue"
+            android:textColor="?attr/Heading_color"
             android:layout_gravity="center"
             android:layout_margin="50dp"
-            app:cornerRadius="30dp"
+            app:cornerRadius="7dp"
+            app:backgroundTint="?attr/ButtonBackground"
             app:strokeColor="@color/light_blue"
             app:strokeWidth="1dp"
-
             />
     </LinearLayout>
 

@@ -1,15 +1,12 @@
 package com.mohitsharma.virtualnews.ui.fragments
 
-import am.appwise.components.ni.NoInternetDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.util.*
 import kotlinx.android.synthetic.main.home_fragment.*
-import java.lang.Exception
 
 
 class HomeFragment : BaseFragment(R.layout.home_fragment) {
@@ -21,15 +18,15 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         observeBreakingNews()
 
         btn_retry.setOnClickListener {
-            viewModel.getBreakingNews("in")
+             viewModel.getBreakingNews("in")
         }
 
         viewModel.currentCountryLiveData.observe(viewLifecycleOwner, Observer {
             adapter.differ.currentList.apply {
-                if (this.isEmpty()){
+                if (this.isEmpty()) {
                     viewModel.getBreakingNews(it)
                 }
-                if(!this.containsAll(this))
+                if (!this.containsAll(this))
                     viewModel.getBreakingNews(it)
             }
             viewModel.currentCountry = it
@@ -54,7 +51,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                         adapter.notifyDataSetChanged()
                     }
                 }
-                is Resources.Error ->{
+                is Resources.Error -> {
                     progress_bar.hide()
                     requireContext().toast("Error!")
                     btn_retry.show()
@@ -81,7 +78,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                     try {
                         viewModel.getBreakingNews(viewModel.currentCountry)
                         adapter.notifyDataSetChanged()
-                    }catch (e:Exception){
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
@@ -92,7 +89,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
 
     override fun onResume() {
         view_pager.let {
-            it.setCurrentItem(viewModel.currentNewsPosition -1)
+            it.setCurrentItem(viewModel.currentNewsPosition - 1)
         }
         super.onResume()
     }

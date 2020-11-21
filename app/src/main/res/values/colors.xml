@@ -13,6 +13,7 @@
     <color name="red_shade">#FF8888</color>
     <color name="blue_3">#536DFE</color>
     <color name="blue_4">#4285F4</color>
+    <color name="transparent">#00000000</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

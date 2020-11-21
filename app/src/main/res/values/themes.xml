@@ -28,6 +28,7 @@
         <item name="DeleteButtonIcon">@drawable/ic_trash_2</item>
         <item name="noInternetDrawable">@drawable/no_internet_connection</item>
         <item name="SearchButtonIcon">@drawable/ic_search_icon</item>
+        <item name="ButtonBackground">@color/white</item>
 
     </style>
 

@@ -1,12 +1,9 @@
 package com.mohitsharma.virtualnews.ui.fragments
 
-
-import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -16,13 +13,12 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.material.snackbar.Snackbar
 import com.mohitsharma.virtualnews.R
-import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
 import com.mohitsharma.virtualnews.adapters.SearchRecAdapter
 import com.mohitsharma.virtualnews.util.*
 import com.mohitsharma.virtualnews.util.Constants.SEARCH_DELAY_TIME
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import com.mohitsharma.virtualnews.util.swipeDetector.ItemTouchHelperCallback
+import com.mohitsharma.virtualnews.util.swipeDetector.RecyclerViewSwipe
 import kotlinx.android.synthetic.main.categories_layout.*
-import kotlinx.android.synthetic.main.saved_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.ib_clear_selection
 import kotlinx.coroutines.MainScope
@@ -60,6 +56,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         search_edit_text.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 performSearch(search_edit_text.text.toString())
+
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
@@ -94,8 +91,9 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         delay(SEARCH_DELAY_TIME)
         query.let {
             if (it.isNotEmpty()) {
-                viewModel.getSearchNews(it)
-                viewModel.searchTopBarState.postValue(TopBarState.SearchState(it))
+                viewModel.getSearchNews(it.trim())
+                viewModel.searchTopBarState.postValue(TopBarState.SearchState(it.trim()))
+                search_edit_text.hideKeyboard()
             }
         }
     }
@@ -114,6 +112,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
                     if (state.query != null) {
                         state.query.let {
+                            search_edit_layout.requestFocus()
                             search_edit_layout.placeholderText = it
                         }
                     }
@@ -199,7 +198,6 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                 }
                 is TopBarState.CategoryState -> {
                     top_bar_title.text = Constants.CATEGORY
-
                     search_rec_view.hide()
                     viewModel.searchTopBarState.postValue(TopBarState.NormalState())
                 }
@@ -211,60 +209,30 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         }
     }
 
-    private fun getItemTouchHelperCallBack() = object : ItemTouchHelper.SimpleCallback(
-        0, ItemTouchHelper.LEFT
-    ) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            return false
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+    private fun getItemTouchHelperCallBack() = ItemTouchHelperCallback(object :RecyclerViewSwipe{
+        override fun onSwipeLeft(viewHolder: RecyclerView.ViewHolder) {
             val position = viewHolder.adapterPosition
             val currentArticle = searchAdapter.searchDiffer.currentList[position]
             viewModel.saveArticle(currentArticle)
             view?.let {
                 Snackbar.make(it, "Saved", Snackbar.LENGTH_LONG).show()
             }
+            searchAdapter.notifyDataSetChanged()
         }
 
-        override fun onChildDraw(
-            c: Canvas,
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            dX: Float,
-            dY: Float,
-            actionState: Int,
-            isCurrentlyActive: Boolean
-        ) {
-            RecyclerViewSwipeDecorator.Builder(
-                c,
-                recyclerView,
-                viewHolder,
-                dX,
-                dY,
-                actionState,
-                isCurrentlyActive
-            ).addSwipeLeftBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.light_blue)
-            )
-                .addSwipeLeftActionIcon(R.drawable.ic_icons8_bookmark)
-                .setActionIconTint(R.color.white)
-                .create()
-                .decorate()
-            super.onChildDraw(
-                c,
-                recyclerView,
-                viewHolder,
-                dX,
-                dY,
-                actionState,
-                isCurrentlyActive
-            )
+        override fun onSwipeRight(viewHolder: RecyclerView.ViewHolder) {
+            val position = viewHolder.adapterPosition
+            val currentArticle = searchAdapter.searchDiffer.currentList[position]
+          requireContext().share(currentArticle)
+            searchAdapter.notifyDataSetChanged()
         }
 
-    }
+        override fun addSwipeLeftBackgroundColor(): Int = requireContext().getColor(R.color.light_blue)
+
+        override fun addSwipeRightBackgroundColor(): Int = requireContext().getColor(R.color.transparent)
+
+        override fun addSwipeLeftActionIcon(): Int = R.drawable.ic_baseline_bookmark_border_24
+
+    })
+
 }
