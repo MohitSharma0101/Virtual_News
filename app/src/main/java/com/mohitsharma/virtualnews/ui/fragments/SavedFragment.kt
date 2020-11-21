@@ -1,6 +1,5 @@
 package com.mohitsharma.virtualnews.ui.fragments
 
-import android.content.res.Resources
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
@@ -14,7 +13,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
-import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.util.*
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.saved_fragment.*
@@ -22,7 +20,7 @@ import kotlinx.android.synthetic.main.saved_fragment.*
 
 class SavedFragment : BaseFragment(R.layout.saved_fragment) {
     lateinit var savedAdapter: SavedRecAdapter
-    lateinit var itemTouchHelper:ItemTouchHelper
+    lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,14 +29,14 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         observeTopBarState()
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            when(viewModel.savedTopBarState.value){
-                is TopBarState.SelectionState ->clearSelection()
+            when (viewModel.savedTopBarState.value) {
+                is TopBarState.SelectionState -> clearSelection()
                 else -> findNavController().popBackStack()
             }
         }
 
         viewModel.savedNewsLiveData.observe(viewLifecycleOwner, Observer {
-            if(it.isEmpty()){
+            if (it.isEmpty()) {
                 iv_no_saved_news.show()
             } else {
                 iv_no_saved_news.hide()
@@ -52,7 +50,7 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         }
     }
 
-    private fun observeTopBarState(){
+    private fun observeTopBarState() {
         viewModel.savedTopBarState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is TopBarState.SelectionState -> {
@@ -78,26 +76,26 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         })
     }
 
-    private  fun clearSelection(){
+    private fun clearSelection() {
         viewModel.savedTopBarState.postValue(TopBarState.NormalState())
         savedAdapter.selectedItems.clear()
         findNavController().navigate(R.id.savedFragment)
     }
 
-    private fun confirmDeleteAlert() =  MaterialAlertDialogBuilder(requireContext(),R.style.CustomMaterialDialog)
+    private fun confirmDeleteAlert() =
+        MaterialAlertDialogBuilder(requireContext(), R.style.CustomMaterialDialog)
             .setIcon(R.drawable.ic_trash_2)
             .setTitle("Delete All Articles")
             .setMessage("Are you sure You want to delete All saved news?")
-            .setPositiveButton("Yes") {_,_ ->
+            .setPositiveButton("Yes") { _, _ ->
                 viewModel.deleteAllArticle()
             }
-            .setNegativeButton("No") { _,_ ->
+            .setNegativeButton("No") { _, _ ->
             }
             .show()
 
 
-
-    private fun setUpRecyclerView(){
+    private fun setUpRecyclerView() {
         savedAdapter = SavedRecAdapter(viewModel)
         saved_rec_view.setUpWithAdapter(requireContext(), savedAdapter)
 
@@ -111,17 +109,20 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
             ): Boolean {
                 return false
             }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val currentArticle = savedAdapter.savedDiffer.currentList[position]
                 viewModel.deleteArticle(currentArticle)
-                view?.let { Snackbar.make(it,"Deleted",Snackbar.LENGTH_LONG).apply {
-                    setAction("UNDO"){
-                        viewModel.saveArticle(currentArticle)
-                        savedAdapter.notifyDataSetChanged()
+                view?.let {
+                    Snackbar.make(it, "Deleted", Snackbar.LENGTH_LONG).apply {
+                        setAction("UNDO") {
+                            viewModel.saveArticle(currentArticle)
+                            savedAdapter.notifyDataSetChanged()
+                        }
+                        show()
                     }
-                    show()
-                } }
+                }
                 savedAdapter.notifyDataSetChanged()
             }
 
@@ -148,7 +149,6 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
                     .addSwipeLeftActionIcon(R.drawable.ic_trash_2_white)
                     .create()
                     .decorate()
-
                 super.onChildDraw(
                     c,
                     recyclerView,
@@ -161,11 +161,9 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
             }
 
         }
-         itemTouchHelper = ItemTouchHelper(simpleCallBack)
+        itemTouchHelper = ItemTouchHelper(simpleCallBack)
         itemTouchHelper.attachToRecyclerView(saved_rec_view)
     }
-
-
 
 
 }

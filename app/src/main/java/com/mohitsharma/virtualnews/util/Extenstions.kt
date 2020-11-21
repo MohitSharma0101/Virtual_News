@@ -6,6 +6,7 @@ import android.content.Context
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewAnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,13 @@ fun String.format() :String {
 
 fun Float.convertToDp(context: Context): Float {
     return this / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+}
+
+fun View.showKeyboard(){
+    this.requestFocus()
+    val inputMethodManager: InputMethodManager =
+        this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }
 
 fun View.revealWithAnimation(){

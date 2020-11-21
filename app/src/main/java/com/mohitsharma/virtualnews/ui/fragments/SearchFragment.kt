@@ -1,19 +1,30 @@
 package com.mohitsharma.virtualnews.ui.fragments
 
-import android.content.Context
+
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
+import com.google.android.material.snackbar.Snackbar
 import com.mohitsharma.virtualnews.R
+import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
 import com.mohitsharma.virtualnews.adapters.SearchRecAdapter
 import com.mohitsharma.virtualnews.util.*
 import com.mohitsharma.virtualnews.util.Constants.SEARCH_DELAY_TIME
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.categories_layout.*
+import kotlinx.android.synthetic.main.saved_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.*
+import kotlinx.android.synthetic.main.search_fragment.ib_clear_selection
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -29,6 +40,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         search_rec_view.apply {
             adapter = searchAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            ItemTouchHelper(getItemTouchHelperCallBack()).attachToRecyclerView(this)
         }
 
         observeSearchNews()
@@ -38,19 +50,19 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
         btn_search.setOnClickListener {
             viewModel.searchTopBarState.postValue(TopBarState.SearchState())
+            YoYo.with(Techniques.FadeIn)
+                .duration(500)
+                .playOn(search_edit_layout)
+            search_edit_text.showKeyboard()
         }
 
 
-        search_bar.setOnSearchListener {
-            MainScope().launch {
-                delay(SEARCH_DELAY_TIME)
-                it.let {
-                    if (it.isNotEmpty()) {
-                        viewModel.getSearchNews(it)
-                    }
-                }
+        search_edit_text.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch(search_edit_text.text.toString())
+                return@setOnEditorActionListener true
             }
-            viewModel.searchTopBarState.postValue(TopBarState.SearchState(it))
+            return@setOnEditorActionListener false
         }
 
         business_card.setOnClickListener {
@@ -78,6 +90,17 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
     }
 
+    private fun performSearch(query: String) = MainScope().launch {
+        delay(SEARCH_DELAY_TIME)
+        query.let {
+            if (it.isNotEmpty()) {
+                viewModel.getSearchNews(it)
+                viewModel.searchTopBarState.postValue(TopBarState.SearchState(it))
+            }
+        }
+    }
+
+
     private fun activateCategoryState(category: String) {
         viewModel.getNewsByCategory(category)
         viewModel.searchTopBarState.postValue(TopBarState.CategoryState(category.format()))
@@ -91,11 +114,11 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
                     if (state.query != null) {
                         state.query.let {
-                            search_bar.setSearchedPhrase(it)
+                            search_edit_layout.placeholderText = it
                         }
                     }
                     search_top_bar.hide()
-                    search_bar.show()
+                    search_edit_layout.show()
                     search_rec_view.show()
                 }
                 is TopBarState.CategoryState -> {
@@ -106,7 +129,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                     }
                 }
                 is TopBarState.NormalState -> {
-                    search_bar.hide()
+                    search_edit_layout.hide()
                     ib_clear_selection.hide()
                     top_bar_title.text = Constants.CATEGORY
                     search_rec_view.hide()
@@ -163,20 +186,12 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         })
     }
 
-    fun showKeyboard() {
-        val inputMethodManager: InputMethodManager =
-            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-    }
 
     private fun handleBackPress() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             when (viewModel.searchTopBarState.value) {
                 is TopBarState.SearchState -> {
-                    search_bar.clickBackButton()
-                    search_bar.clearSearch()
-                    search_bar.clearFocus()
-                    search_bar.hide()
+                    search_edit_layout.hide()
                     search_rec_view.hide()
                     search_top_bar.show()
                     top_bar_title.text = Constants.CATEGORY
@@ -184,6 +199,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                 }
                 is TopBarState.CategoryState -> {
                     top_bar_title.text = Constants.CATEGORY
+
                     search_rec_view.hide()
                     viewModel.searchTopBarState.postValue(TopBarState.NormalState())
                 }
@@ -195,4 +211,60 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         }
     }
 
+    private fun getItemTouchHelperCallBack() = object : ItemTouchHelper.SimpleCallback(
+        0, ItemTouchHelper.LEFT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.adapterPosition
+            val currentArticle = searchAdapter.searchDiffer.currentList[position]
+            viewModel.saveArticle(currentArticle)
+            view?.let {
+                Snackbar.make(it, "Saved", Snackbar.LENGTH_LONG).show()
+            }
+        }
+
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+            RecyclerViewSwipeDecorator.Builder(
+                c,
+                recyclerView,
+                viewHolder,
+                dX,
+                dY,
+                actionState,
+                isCurrentlyActive
+            ).addSwipeLeftBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.light_blue)
+            )
+                .addSwipeLeftActionIcon(R.drawable.ic_icons8_bookmark)
+                .setActionIconTint(R.color.white)
+                .create()
+                .decorate()
+            super.onChildDraw(
+                c,
+                recyclerView,
+                viewHolder,
+                dX,
+                dY,
+                actionState,
+                isCurrentlyActive
+            )
+        }
+
+    }
 }
