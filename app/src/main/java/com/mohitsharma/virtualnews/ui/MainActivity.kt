@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -19,6 +20,8 @@ import com.mohitsharma.virtualnews.database.ArticleDatabase
 import com.mohitsharma.virtualnews.repository.NewsRepository
 import com.mohitsharma.virtualnews.util.countryPicker.CustomCountryPicker
 import com.mohitsharma.virtualnews.util.setOnItemReselectedListener
+import com.mohitsharma.virtualnews.util.slideDown
+import com.mohitsharma.virtualnews.util.slideUp
 import com.mohitsharma.virtualnews.util.swipeDetector.SwipeActions
 import com.mohitsharma.virtualnews.util.swipeDetector.SwipeGestureDetector
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
@@ -35,9 +38,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: NewsViewModel
     lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     lateinit var newsRepository: NewsRepository
-    private lateinit var  countryPicker: CustomCountryPicker
+    private lateinit var countryPicker: CustomCountryPicker
     lateinit var noInternetDialog: NoInternetDialog
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-        countryPicker  =   CustomCountryPicker(this).attach(country_picker_bottom_sheet)
+        countryPicker = CustomCountryPicker(this).attach(country_picker_bottom_sheet)
 
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
@@ -75,12 +77,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun detectSwipeGestures(){
+    private fun detectSwipeGestures() {
         val swipeGestureDetector = SwipeGestureDetector(object : SwipeActions {
             override fun onSwipeLeft() {}
 
             override fun onSwipeUp() {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                if (bottom_bar.isVisible) bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                else bottom_bar.slideUp()
+            }
+
+            override fun onSwipeDown() {
+                bottom_bar.slideDown()
             }
         })
 
@@ -93,20 +100,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun restartActivity() {
-        val options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
-        startActivity(Intent(applicationContext, MainActivity::class.java),options.toBundle())
+        val options = ActivityOptions.makeCustomAnimation(
+            this,
+            android.R.anim.fade_in,
+            android.R.anim.fade_out
+        )
+        startActivity(Intent(applicationContext, MainActivity::class.java), options.toBundle())
         finish()
     }
 
     private fun isDarkMode(isDarkMode: Boolean) = GlobalScope.launch(Dispatchers.IO) {
         newsRepository.getDataStore().saveUiMode(isDarkMode)
     }
+
     private fun saveCurrentCountry(country: String) = GlobalScope.launch(Dispatchers.IO) {
         newsRepository.getDataStore().saveToDataStore(country)
     }
 
 
-    private fun setUpBottomSheet(){
+    private fun setUpBottomSheet() {
         viewModel.currentCountryLiveData.observe(this, Observer {
             tv_selectedCountry.text = countryPicker.getCountryByCode(it)
             viewModel.currentCountry = it
@@ -133,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                     text = it.name
                     tag = it.name
                 }
-               saveCurrentCountry(it.code)
+                saveCurrentCountry(it.code)
                 countryPicker.dismiss()
                 restartActivity()
 
@@ -171,10 +183,10 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED){
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             countryPicker.dismiss()
-        }else{
+        } else {
             super.onBackPressed()
         }
 

@@ -51,7 +51,6 @@
         app:exb_item_horizontal_padding="15dp"
         app:exb_items="@menu/menu_bottom"
         android:layout_gravity="bottom"
-        app:layout_behavior="github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -59,3 +58,4 @@
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!--        app:layout_behavior="github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior"-->

@@ -55,6 +55,8 @@ class SwipeGestureDetector(private val swipeActions: SwipeActions) :
             // Now Check Which Side Swipe Happened
             if (distanceSwipedInY > 0) {
                 swipeActions.onSwipeUp()
+            } else {
+                swipeActions.onSwipeDown()
             }
         }
         return false
