@@ -33,7 +33,7 @@
         android:layout_height="60dp"
         app:layout_anchor="@id/bottom_bar"
         app:layout_anchorGravity="top"
-        android:paddingBottom="30dp"
+        android:paddingBottom="20dp"
         android:src="@drawable/expnadable_bar"
         android:background="@color/transparent"
         />

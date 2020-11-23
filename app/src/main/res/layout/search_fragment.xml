@@ -42,13 +42,17 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:cardCornerRadius="0dp">
-
-        <ImageButton
-            android:id="@+id/ib_clear_selection"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
-            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="10dp"
+            >
+        <ImageButton
+            android:id="@+id/ib_clear_selection"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@color/transparent"
             android:contentDescription="clear selection mode"
             android:src="@drawable/ic_baseline_clear_24"
@@ -59,14 +63,14 @@
             android:id="@+id/top_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center"
-            android:layout_marginStart="30dp"
             android:fontFamily="sans-serif-medium"
-            android:paddingStart="10dp"
             android:text="Categories"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"
             android:textColor="?attr/Heading_color"
             android:textSize="25sp" />
 
+        </LinearLayout>
         <ImageButton
             android:id="@+id/btn_search"
             android:layout_width="40dp"
@@ -110,13 +114,27 @@
         app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
         app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
         app:fastScrollVerticalTrackDrawable="@drawable/line_drawable" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_rec_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:visibility="gone"
+        app:fastScrollEnabled="true"
+        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
+        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
+        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
+        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
-        <include layout="@layout/categories_layout" />
+        <include
+            android:id="@+id/category_grid_view"
+            layout="@layout/categories_layout" />
 
     </ScrollView>
 

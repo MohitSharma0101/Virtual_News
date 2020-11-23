@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
+import androidx.core.view.marginStart
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
 class SearchFragment : BaseFragment(R.layout.search_fragment) {
 
     lateinit var searchAdapter: SearchRecAdapter
+    lateinit var categoryAdapter: SearchRecAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,6 +37,12 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         searchAdapter = SearchRecAdapter()
         search_rec_view.apply {
             adapter = searchAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            ItemTouchHelper(getItemTouchHelperCallBack()).attachToRecyclerView(this)
+        }
+        categoryAdapter = SearchRecAdapter()
+        category_rec_view.apply {
+            adapter = categoryAdapter
             layoutManager = LinearLayoutManager(requireContext())
             ItemTouchHelper(getItemTouchHelperCallBack()).attachToRecyclerView(this)
         }
@@ -124,7 +132,6 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                     state.category.let {
                         ib_clear_selection.show()
                         top_bar_title.text = it
-                        search_rec_view.show()
                     }
                 }
                 is TopBarState.NormalState -> {
@@ -132,6 +139,8 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                     ib_clear_selection.hide()
                     top_bar_title.text = Constants.CATEGORY
                     search_rec_view.hide()
+                    category_grid_view.show()
+                    category_rec_view.hide()
                     search_top_bar.show()
                 }
             }
@@ -144,8 +153,9 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
             when (it) {
                 is Resources.Success -> {
                     it.data?.let { newsResponse ->
-                        progress_bar.hide()
                         searchAdapter.searchDiffer.submitList(newsResponse.articles)
+                        progress_bar.hide()
+                        category_grid_view.hide()
                     }
                 }
                 is Resources.Loading -> {
@@ -167,8 +177,10 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
             when (it) {
                 is Resources.Success -> {
                     it.data?.let { newsResponse ->
-                        searchAdapter.searchDiffer.submitList(newsResponse.articles)
+                        categoryAdapter.searchDiffer.submitList(newsResponse.articles)
                         progress_bar.hide()
+                        category_rec_view.show()
+                        category_grid_view.hide()
                     }
                 }
                 is Resources.Loading -> {
@@ -197,8 +209,9 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                     viewModel.searchTopBarState.postValue(TopBarState.NormalState())
                 }
                 is TopBarState.CategoryState -> {
-                    top_bar_title.text = Constants.CATEGORY
                     search_rec_view.hide()
+                    category_rec_view.hide()
+                    top_bar_title.text = Constants.CATEGORY
                     viewModel.searchTopBarState.postValue(TopBarState.NormalState())
                 }
                 else -> {
