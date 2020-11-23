@@ -188,7 +188,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
                 }
                 is Resources.Error -> {
                     progress_bar.hide()
-                    requireContext().toast("No Result Found!")
+                    requireContext().toast("Something went wrong!")
                     viewModel.searchTopBarState.postValue(TopBarState.NormalState())
                 }
                 else -> {

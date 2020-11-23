@@ -17,6 +17,17 @@
         android:src="@drawable/ic_icons8_bookmark_outline"
         app:layout_anchor="@id/iv_content_image"
         app:layout_anchorGravity="bottom|end" />
+    <ImageButton
+        android:id="@+id/ib_share_article"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_baseline_share_24"
+        app:layout_anchor="@id/iv_content_image"
+        app:layout_anchorGravity="end"
+        android:layout_margin="20dp"
+        android:background="@color/transparent"
+        android:elevation="4dp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +35,7 @@
         android:background="?attr/AppBackground"
         android:orientation="vertical">
 
-        <pl.droidsonroids.gif.GifImageView
+        <ImageView
             android:id="@+id/iv_content_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"

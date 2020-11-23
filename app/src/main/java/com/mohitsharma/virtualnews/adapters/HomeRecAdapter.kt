@@ -15,6 +15,7 @@ import com.bumptech.glide.signature.ObjectKey
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.ui.NewsViewModel
+import com.mohitsharma.virtualnews.util.share
 import com.mohitsharma.virtualnews.util.showArticleInWebView
 import com.mohitsharma.virtualnews.util.toast
 import com.thefinestartist.finestwebview.FinestWebView
@@ -64,6 +65,9 @@ class HomeRecAdapter( var viewModel: NewsViewModel) : RecyclerView.Adapter<HomeR
                 viewModel.saveArticle(article)
                 context.toast("Saved")
                 notifyDataSetChanged()
+            }
+            ib_share_article.setOnClickListener {
+                context.share(article)
             }
         }
     }

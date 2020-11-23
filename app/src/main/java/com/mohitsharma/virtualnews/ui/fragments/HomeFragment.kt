@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.Snackbar
 import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.util.*
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -53,7 +54,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                 }
                 is Resources.Error -> {
                     progress_bar.hide()
-                    requireContext().toast("Error!")
+                    requireContext().toast("Something went wrong!")
                     btn_retry.show()
                     retry_view.show()
                 }
