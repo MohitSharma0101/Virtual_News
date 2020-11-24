@@ -61,7 +61,9 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
                         clearSelection()
                     }
                     btn_delete_selected.setOnClickListener {
+                        val itemCount = savedAdapter.selectedItems.size
                         viewModel.deleteSelected(savedAdapter.selectedItems)
+                        context?.toast("$itemCount article deleted!")
                         clearSelection()
                     }
                     tv_item_count.text = savedAdapter.selectedItems.size.toString()

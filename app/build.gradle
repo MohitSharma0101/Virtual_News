@@ -125,10 +125,17 @@ dependencies {
     //Data Store
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
 
-//    //Country Picker
+    //Country Picker
     implementation 'com.github.mukeshsolanki:country-picker-android:2.0.4'
 
     //view animation
     implementation 'com.daimajia.androidanimations:library:2.4@aar'
+
+    //fancyToast
+    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.8'
+
+    //zoomable Phot viewer
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
 
 }

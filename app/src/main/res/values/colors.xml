@@ -3,34 +3,18 @@
     <color name="dark_grey">#121212</color>
     <color name="light_blue2">#2E5BFF</color>
     <color name="light_blue">#4285F4</color>
-    <color name="light_blue_temp">#407CDE</color>
     <color name="blue_tint">#D5DEFF</color>
     <color name="light_grey">#2D2E30</color>
     <color name="grey_bold">#A8A8B0</color>
     <color name="text_color">#8B8C90</color>
     <color name="dark_blue">#394456</color>
     <color name="blue_shade">#432979FF</color>
-    <color name="red_shade">#FF8888</color>
-    <color name="blue_3">#536DFE</color>
-    <color name="blue_4">#4285F4</color>
     <color name="transparent">#00000000</color>
 
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="grey">#EE4E4D4D</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey_blue">#F2E7FE</color>
-    <color name="white2">#E7E9EA</color>
-    <color name="reply_blue_700">#344955</color>
     <color name="reply_blue_800">#232F34</color>
-    <color name="reply_blue_600">#4A6572</color>
-    <color name="reply_blue_601">#5f7481</color>
-    <color name="reply_orange_500">#F9AA33</color>
-    <color name="light_red">#ffd8d9</color>
     <color name="red">#EA4335</color>
     <color name="red_400">#EF5350</color>
 </resources>

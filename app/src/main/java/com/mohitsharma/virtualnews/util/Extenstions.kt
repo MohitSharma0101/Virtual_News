@@ -17,6 +17,7 @@ import com.mohitsharma.virtualnews.R
 import com.mohitsharma.virtualnews.adapters.SavedRecAdapter
 import com.mohitsharma.virtualnews.model.Article
 import com.mohitsharma.virtualnews.model.NewsResponse
+import com.shashank.sony.fancytoastlib.FancyToast
 import com.thefinestartist.finestwebview.FinestWebView
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
@@ -24,6 +25,14 @@ import github.com.st235.lib_expandablebottombar.ExpandableBottomBarMenuItem
 
 fun Context.toast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+}
+
+fun Context.successToast(msg: String){
+    FancyToast.makeText(this,msg,FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show()
+}
+
+fun Context.errorToast(msg: String){
+    FancyToast.makeText(this,msg,FancyToast.LENGTH_SHORT,FancyToast.ERROR,false).show()
 }
 
 fun View.hide() {
@@ -151,7 +160,7 @@ fun Context.share(article: Article) {
     share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
     share.putExtra(Intent.EXTRA_SUBJECT, article.title)
     share.putExtra(Intent.EXTRA_TEXT, article.url)
-    this.startActivity(Intent.createChooser(share, "Virtual News"))
+    this.startActivity(Intent.createChooser(share, "Share Article"))
 }
 
 

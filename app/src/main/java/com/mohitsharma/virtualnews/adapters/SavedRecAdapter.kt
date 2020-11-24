@@ -54,6 +54,8 @@ class SavedRecAdapter(private val viewModel: NewsViewModel) :
                 .load(article.urlToImage)
                 .centerCrop()
                 .signature(ObjectKey(article.title))
+                .placeholder(R.drawable.photo_placeholder)
+                .error(R.drawable.photo_placeholder)
                 .into(iv_content_image)
 
             setOnLongClickListener {

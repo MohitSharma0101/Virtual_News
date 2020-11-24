@@ -1,9 +1,0 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
-  <path
-      android:pathData="M5.001,21L5.001,5A2,2 0,0 1,7.001 3L17.001,3a2,2 0,0 1,2 2L19.001,21L12.001,18 5.001,21ZM12.001,15.82L12.001,15.82L17.001,18L17.001,5L7.001,5L7.001,18L12.001,15.82Z"
-      android:fillColor="?attr/Bookmark_color"/>
-</vector>
