@@ -3,18 +3,21 @@ package com.mohitsharma.virtualnews.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.mohitsharma.virtualnews.R
+import com.mohitsharma.virtualnews.adapters.HomeRecAdapter
 import com.mohitsharma.virtualnews.util.*
 import kotlinx.android.synthetic.main.home_fragment.*
 
 
 class HomeFragment : BaseFragment(R.layout.home_fragment) {
+    lateinit var adapter: HomeRecAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        adapter = HomeRecAdapter(viewModel)
         setUpVIewPager()
         observeBreakingNews()
 

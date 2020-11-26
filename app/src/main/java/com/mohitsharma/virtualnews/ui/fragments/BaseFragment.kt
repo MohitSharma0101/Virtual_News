@@ -10,11 +10,9 @@ import com.mohitsharma.virtualnews.ui.NewsViewModel
 abstract class BaseFragment(layout: Int) : Fragment(layout) {
 
     lateinit var viewModel: NewsViewModel
-    lateinit var adapter: HomeRecAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
-        adapter = HomeRecAdapter(viewModel)
     }
 
 }

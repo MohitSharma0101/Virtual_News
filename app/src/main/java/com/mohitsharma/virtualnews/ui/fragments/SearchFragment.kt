@@ -38,13 +38,13 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         search_rec_view.apply {
             adapter = searchAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            ItemTouchHelper(getItemTouchHelperCallBack()).attachToRecyclerView(this)
+            ItemTouchHelper(getItemTouchHelperCallBack(searchAdapter)).attachToRecyclerView(this)
         }
         categoryAdapter = SearchRecAdapter()
         category_rec_view.apply {
             adapter = categoryAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            ItemTouchHelper(getItemTouchHelperCallBack()).attachToRecyclerView(this)
+            ItemTouchHelper(getItemTouchHelperCallBack(categoryAdapter)).attachToRecyclerView(this)
         }
 
         observeSearchNews()
@@ -222,22 +222,22 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
         }
     }
 
-    private fun getItemTouchHelperCallBack() = ItemTouchHelperCallback(object :RecyclerViewSwipe{
+    private fun getItemTouchHelperCallBack(adapter: SearchRecAdapter) = ItemTouchHelperCallback(object :RecyclerViewSwipe{
         override fun onSwipeLeft(viewHolder: RecyclerView.ViewHolder) {
             val position = viewHolder.adapterPosition
-            val currentArticle = searchAdapter.searchDiffer.currentList[position]
+            val currentArticle = adapter.searchDiffer.currentList[position]
             viewModel.saveArticle(currentArticle)
             view?.let {
                 Snackbar.make(it, "Saved", Snackbar.LENGTH_LONG).show()
             }
-            searchAdapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         }
 
         override fun onSwipeRight(viewHolder: RecyclerView.ViewHolder) {
             val position = viewHolder.adapterPosition
-            val currentArticle = searchAdapter.searchDiffer.currentList[position]
+            val currentArticle = adapter.searchDiffer.currentList[position]
           requireContext().share(currentArticle)
-            searchAdapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         }
 
         override fun addSwipeLeftBackgroundColor(): Int = requireContext().getColor(R.color.light_blue)

@@ -12,7 +12,6 @@ import java.util.prefs.PreferenceChangeListener
 class CountryPickerAdapter(private val countryList:ArrayList<Country>) : RecyclerView.Adapter<CountryPickerAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
-    lateinit var onItemClickListener: View.OnClickListener
     private var onCountrySelectedListener :((Country) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(

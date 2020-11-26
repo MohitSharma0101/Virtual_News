@@ -61,6 +61,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:paddingBottom="8dp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:text="@string/headline_dummy_text"
                 android:textColor="?attr/Heading_color"
                 android:textSize="20sp" />
