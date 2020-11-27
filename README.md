@@ -18,6 +18,9 @@ Powered by [News Api](https://newsapi.org).
 <img src="previews/home.png" width=200/> <img src="previews/settings.png" width=200/>
 <img src="previews/saved.png" width=200/> <img src="previews/discover.png" width=200/>
 
+### [Demo Video](https://drive.google.com/file/d/11MAQb7lUZAyVoA3F6dbw_K1qc8KxhSH9/view?usp=sharing)
+
+
 ### Tech Stack
 * MVVM Architecture
 * Retrofit
